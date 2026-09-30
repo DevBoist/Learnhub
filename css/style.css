@@ -445,7 +445,7 @@ form {
 
 
 .auth-card.is-login .welcome-panel {
-    /* Move left by the panel's own width: from the right half to the left. */
+    
     transform: translateX(-100%);
 }
 
