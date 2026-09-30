@@ -1,0 +1,567 @@
+
+:root {
+    --page-background: #edf2f7;
+    --surface: #ffffff;
+    --text: #172b45;
+    --muted: #64748b;
+    --blue: #164675;
+    --blue-dark: #10365d;
+    --border: #dce3eb;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    background: radial-gradient(ellipse at top left, #f8fafc, transparent 65%),
+        var(--page-background);
+    color: var(--text);
+    font-family: "Segoe UI", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid #79aee1;
+    outline-offset: 4px;
+}
+
+/* 3. Main card and the two forms.
+   The grid has two equal columns: registration left, login right.
+   minmax(0, 1fr) lets each column shrink without overflowing. */
+.auth-card {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    max-width: 1100px;
+    min-height: 740px;
+    overflow: hidden;
+    border: 1px solid #e1e7ee;
+    border-radius: 26px;
+    background: var(--surface);
+    box-shadow: 0 24px 80px #172b4512, 0 4px 16px #172b4505;
+}
+
+.form-panel {
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 40px 52px;
+    /* Animate fading and movement when the active form changes. */
+    transition: opacity 300ms ease, transform 700ms ease;
+}
+
+.register-panel {
+    grid-column: 1;
+}
+
+.login-panel {
+    grid-column: 2;
+    /* Registration is shown first, so login starts hidden. */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(24px);
+}
+
+/* 4. Brand and form headings. */
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.brand-mark {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--blue);
+    color: white;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.brand-name {
+    font-size: 19px;
+    font-weight: 750;
+    letter-spacing: -0.6px;
+}
+
+.brand-dot {
+    color: #5c8dbb;
+}
+
+.form-heading {
+    margin: 32px 0 24px;
+}
+
+.eyebrow {
+    margin-bottom: 10px;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.form-heading h1,
+.form-heading h2 {
+
+    font-size: clamp(26px, 2.6vw, 32px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.form-intro {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+form {
+    display: grid;
+    gap: 17px;
+}
+
+.name-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.form-field {
+    min-width: 0;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 7px;
+    color: #35465c;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.form-field input,
+.form-field select {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 46px;
+    padding: 0 13px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    outline: none;
+    background: #fcfdff;
+    color: var(--text);
+    font-size: 13px;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.form-field input::placeholder {
+    color: #64748b;
+}
+
+.form-field select {
+    cursor: pointer;
+}
+
+.form-field select:invalid {
+    color: #64748b;
+}
+
+.form-field option {
+    color: var(--text);
+}
+
+.form-field input:focus,
+.form-field select:focus {
+    border-color: #5684b3;
+    box-shadow: 0 0 0 3px #16467514;
+}
+
+
+.primary-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 47px;
+    margin-top: 4px;
+    padding: 12px 18px;
+    border: 1px solid var(--blue);
+    border-radius: 8px;
+    background: var(--blue);
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px #16467517;
+    transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.primary-button:hover {
+    background: var(--blue-dark);
+}
+
+.primary-button:active {
+    transform: translateY(1px);
+}
+
+.switch-text {
+    margin-top: 23px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+    text-align: center;
+}
+
+.text-button {
+    padding: 3px;
+    border: 0;
+    border-radius: 3px;
+    background: transparent;
+    color: var(--blue);
+    font-size: inherit;
+    font-weight: 700;
+}
+
+.text-button:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.form-message {
+    color: var(--text);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.form-message:empty {
+    display: none;
+}
+
+.login-panel .form-heading {
+    margin-top: 100px;
+}
+
+
+.welcome-panel {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 48px 50px 32px;
+    overflow: hidden;
+    background: var(--blue);
+    color: white;
+
+    transition: transform 750ms cubic-bezier(0.65, 0, 0.2, 1);
+}
+
+.panel-kicker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #c0d7ee;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+}
+
+.panel-kicker span {
+    color: #b0d6ff;
+}
+
+.welcome-copy {
+    position: relative;
+    z-index: 1;
+    margin-top: 58px;
+}
+
+.welcome-copy h2 {
+    max-width: 370px;
+    font-size: clamp(36px, 4vw, 49px);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -1.8px;
+}
+
+.welcome-copy p {
+    max-width: 330px;
+    margin-top: 22px;
+    color: #c4d7ea;
+    font-size: 14px;
+    line-height: 1.85;
+}
+
+.welcome-login {
+    display: none;
+}
+
+
+.welcome-art {
+    position: relative;
+    flex: 1;
+    min-height: 260px;
+    margin: 16px 0;
+}
+
+.orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid #ffffff20;
+    border-radius: 50%;
+}
+
+.orbit-one {
+    width: 250px;
+    height: 250px;
+    transform: translate(-50%, -50%);
+}
+
+.orbit-two {
+    width: 350px;
+    height: 190px;
+    transform: translate(-50%, -50%) rotate(-25deg);
+}
+
+.welcome-art::before,
+.welcome-art::after {
+    /* Pseudo-elements draw the two dots without extra HTML elements. */
+    content: "";
+    position: absolute;
+    z-index: 1;
+    border-radius: 50%;
+    background: #a8ccec;
+}
+
+.welcome-art::before {
+    top: 17%;
+    right: 16%;
+    width: 12px;
+    height: 12px;
+}
+
+.welcome-art::after {
+    bottom: 15%;
+    left: 13%;
+    width: 7px;
+    height: 7px;
+    opacity: 0.7;
+}
+
+.book-shape {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 151px;
+    height: 184px;
+    padding: 25px 20px;
+    transform: translate(-50%, -50%) rotate(-12deg);
+    border-left: 9px solid #bfd1e2;
+    border-bottom: 6px solid #d7e3ef;
+    border-radius: 5px 12px 12px 5px;
+    background: #f6f9fc;
+    color: var(--blue);
+    box-shadow: 16px 21px 0 #ffffff0b, 0 18px 35px #08274245;
+}
+
+.book-spark {
+    position: absolute;
+    top: 20px;
+    right: 16px;
+    color: #7092b3;
+    font-size: 21px;
+}
+
+.book-line {
+    display: block;
+    width: 27px;
+    height: 3px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    background: #91adc8;
+}
+
+.book-line:nth-of-type(3) {
+    width: 17px;
+}
+
+.book-label {
+    display: block;
+    max-width: 85px;
+    margin-top: 20px;
+    font-size: 23px;
+    font-weight: 750;
+    line-height: 1.15;
+    letter-spacing: -0.6px;
+}
+
+.welcome-footer {
+    color: #b6cde4;
+    font-size: 10px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+
+.auth-card.is-login .welcome-panel {
+    
+    transform: translateX(-100%);
+}
+
+.auth-card.is-login .register-panel {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-24px);
+}
+
+.auth-card.is-login .login-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+
+.auth-card.is-login .welcome-register {
+    display: none;
+}
+
+.auth-card.is-login .welcome-login {
+    display: block;
+}
+
+
+@media (max-width: 980px) {
+    .form-panel,
+    .welcome-panel {
+        padding-right: 32px;
+        padding-left: 32px;
+    }
+}
+
+
+@media (max-width: 760px) {
+    body {
+        padding: 20px 16px;
+    }
+
+    .auth-card {
+        grid-template-columns: minmax(0, 1fr);
+        max-width: 520px;
+        min-height: 0;
+        border-radius: 20px;
+    }
+
+    .form-panel {
+        grid-column: 1;
+        grid-row: 2;
+        padding: 30px 26px;
+        transform: none;
+        transition: none;
+    }
+
+    .login-panel,
+    .auth-card.is-login .register-panel {
+        display: none;
+    }
+
+    .auth-card.is-login .login-panel {
+        display: flex;
+    }
+
+    .form-heading,
+    .login-panel .form-heading {
+        margin-top: 26px;
+    }
+
+    .form-heading h1,
+    .form-heading h2 {
+        font-size: 28px;
+    }
+
+    .welcome-panel,
+    .auth-card.is-login .welcome-panel {
+        position: relative;
+        grid-column: 1;
+        grid-row: 1;
+        left: auto;
+        width: 100%;
+        padding: 28px 26px;
+        transform: none;
+        transition: none;
+    }
+
+    .welcome-copy {
+        margin-top: 17px;
+    }
+
+    .welcome-copy h2 {
+        font-size: 31px;
+        letter-spacing: -1px;
+    }
+
+    .welcome-copy p {
+        margin-top: 12px;
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .welcome-art,
+    .welcome-footer {
+        display: none;
+    }
+
+    .form-field input,
+    .form-field select {
+        font-size: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+    }
+}

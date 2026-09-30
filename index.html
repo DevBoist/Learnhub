@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join LearnHub to discover courses, manage assignments, and keep learning.">
+    <title>LearnHub | Welcome</title>
+
+    <!-- Load the CSS that styles this page. -->
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+    <main class="auth-card" id="auth-card">
+
+
+        <section class="form-panel register-panel" id="register-panel" aria-labelledby="register-heading">
+            <a class="brand" href="./index.html" aria-label="LearnHub home">
+                <span class="brand-mark" aria-hidden="true">LH</span>
+                <span class="brand-name">LearnHub<span class="brand-dot">.</span></span>
+            </a>
+
+            <div class="form-heading">
+                <p class="eyebrow">LET'S GET STARTED</p>
+                <h1 id="register-heading">Create your account</h1>
+                <p class="form-intro">A fresh start. A world of things to learn.</p>
+            </div>
+
+            <form id="register-form" method="post" novalidate>
+                <div class="name-row">
+                    <div class="form-field">
+
+                        <label for="first-name">First name</label>
+                        <input
+                            type="text"
+                            id="first-name"
+                            name="firstName"
+                            autocomplete="given-name"
+                            placeholder="First name"
+                            
+                        >
+                    </div>
+                    <div class="form-field">
+                        <label for="last-name">Last name</label>
+                        <input
+                            type="text"
+                            id="last-name"
+                            name="lastName"
+                            autocomplete="family-name"
+                            placeholder="Last name"
+                            
+                        >
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="register-email">Email address</label>
+                    <input
+                        type="email"
+                        id="register-email"
+                        name="email"
+                        autocomplete="email"
+                        placeholder="you@example.com"
+                       
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="register-password">Password</label>
+                    <input
+                        type="password"
+                        id="register-password"
+                        name="password"
+                        autocomplete="new-password"
+                        placeholder="Create a password"
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="register-role">I am joining as a</label>
+                    <select id="register-role" name="role">
+                        <option value="" disabled selected>Select your role</option>
+                        <option value="student">Student</option>
+                        <option value="instructor">Instructor</option>
+                    </select>
+                </div>
+
+
+                <button type="submit" class="primary-button" id="register-button">
+                    Create account <span aria-hidden="true">&rarr;</span>
+                </button>
+                <p class="form-message" id="register-message" role="status" aria-live="polite"></p>
+            </form>
+
+            <p class="switch-text">
+                Already have an account?
+                <button type="button" id="show-login" class="text-button">Log in</button>
+            </p>
+        </section>
+
+
+        <!-- login form -->
+        <section class="form-panel login-panel" id="login-panel" aria-labelledby="login-heading">
+            <a class="brand" href="./index.html" aria-label="LearnHub home">
+                <span class="brand-mark" aria-hidden="true">LH</span>
+                <span class="brand-name">LearnHub<span class="brand-dot">.</span></span>
+            </a>
+
+            <div class="form-heading">
+                <p class="eyebrow">GOOD TO SEE YOU AGAIN</p>
+                <h2 id="login-heading">Welcome back</h2>
+                <p class="form-intro">Log in and pick up where you left off.</p>
+            </div>
+
+            <form id="login-form" method="post" novalidate>
+                <div class="form-field">
+                    <label for="login-email">Email address</label>
+                    <input
+                        type="email"
+                        id="login-email"
+                        name="email"
+                        autocomplete="email"
+                        placeholder="you@example.com"
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="login-password">Password</label>
+                    <input
+                        type="password"
+                        id="login-password"
+                        name="password"
+                        autocomplete="current-password"
+                        placeholder="Enter your password"
+                    >
+                </div>
+
+                <button type="button" class="primary-button" id="login-button">
+                    Log in <span aria-hidden="true">&rarr;</span>
+                </button>
+                <p class="form-message" id="login-message" role="status" aria-live="polite"></p>
+            </form>
+
+            <p class="switch-text">
+                New to LearnHub?
+                <button type="button" id="show-register" class="text-button">Create an account</button>
+            </p>
+        </section>
+
+
+        <aside class="welcome-panel" aria-label="About LearnHub">
+            <p class="panel-kicker"><span aria-hidden="true">&bull;</span> A little progress, every day</p>
+
+            <div class="welcome-copy welcome-register">
+                <h2>Welcome to<br>LearnHub.</h2>
+                <p>Big ideas start with small steps. Find your next course, share what you know, and grow at your own pace.</p>
+            </div>
+
+            <div class="welcome-copy welcome-login">
+                <h2>Your next chapter<br>starts here.</h2>
+                <p>Your courses, assignments, and next big idea. Come back to a space built for your progress.</p>
+            </div>
+
+            <div class="welcome-art" aria-hidden="true">
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+                <div class="book-shape">
+                    <span class="book-spark">&ast;</span>
+                    <span class="book-line"></span>
+                    <span class="book-line"></span>
+                    <span class="book-line"></span>
+                    <span class="book-label">Learn.<br>Build.<br>Grow.</span>
+                </div>
+            </div>
+
+            <p class="welcome-footer">FOR CURIOUS MINDS. FOR WHAT COMES NEXT.</p>
+        </aside>
+    </main>
+
+
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
