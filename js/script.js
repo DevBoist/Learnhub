@@ -1,8 +1,8 @@
 import { auth } from "./firebase.js";
 
-// console.log("Firebase project:", auth.app.options.projectId);
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signOut,
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
@@ -37,9 +37,20 @@ const registerPasswordInput = document.getElementById("register-password");
 const registerRoleSelect = document.getElementById("register-role");
 
 const registerMessage = document.getElementById("register-message");
+// login
+const loginForm = document.getElementById("login-form");
+const loginEmailInput = document.getElementById("login-email");
+const loginPasswordInput = document.getElementById("login-password");
+const loginMessage = document.getElementById("login-message");
+
+const registerButton = document.getElementById("register-button");
+const loginButton = document.getElementById("login-button");
 
 registerForm.addEventListener("submit", async (event) => {
   event.preventDefault();
+  if (registerButton.disabled || loginButton.disabled) {
+    return;
+  }
   registerMessage.textContent = "";
 
   const loginEmailInput = document.getElementById("login-email");
@@ -77,6 +88,10 @@ registerForm.addEventListener("submit", async (event) => {
     return;
   }
 
+  registerButton.disabled = true;
+  loginButton.disabled = true;
+  registerButton.textContent = "Creating account...";
+
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -91,6 +106,8 @@ registerForm.addEventListener("submit", async (event) => {
       email: email,
       role: role,
     });
+
+    registerButton.textContent = "Creating account.....";
 
     const signedOut = await signOut(auth);
 
@@ -109,14 +126,80 @@ registerForm.addEventListener("submit", async (event) => {
     registerMessage.style.color = "green";
     registerMessage.style.fontWeight = "bold";
   } catch (error) {
-     if(error.message === "Firebase: Error (auth/email-already-in-use)."){
-            registerMessage.textContent = "Email already exist, kindly use a different email";
-        }
-    
-    registerMessage.style.color = "red";
-    registerMessage.style.fontWeight = "bold";
+  if (error.code === "auth/email-already-in-use") {
+    registerMessage.textContent = "This email is already registered. Please log in.";
+  } else {
+    registerMessage.textContent = "Account setup could not be completed.";
   }
 
+  registerMessage.style.color = "red";
+  console.error("Registration error:", error.code);
+} finally {
+    registerButton.disabled = false;
+    loginButton.disabled = false;
 
-  
+    registerButton.textContent = "Create account";
+    loginButton.textContent = "Log in";
+  }
+});
+
+// login
+loginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (registerButton.disabled || loginButton.disabled) {
+    return;
+  }
+
+  loginMessage.textContent = "";
+  loginMessage.style.color = "red";
+  loginMessage.style.fontWeight = "bold";
+
+  const email = loginEmailInput.value.trim();
+  const password = loginPasswordInput.value;
+
+  // First, check the form.
+  if (!email || !password) {
+    loginMessage.textContent = "Please enter your email and password.";
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/;
+
+  if (!emailRegex.test(email)) {
+    loginMessage.textContent = "Please enter a valid email address.";
+    return;
+  }
+
+  registerButton.disabled = true;
+  loginButton.disabled = true;
+  loginButton.textContent = "Logging in...";
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+
+    loginMessage.textContent = "Logged in successfully!";
+    loginMessage.style.color = "green";
+  } catch (error) {
+    if (
+      error.code === "auth/invalid-credential" ||
+      error.code === "auth/wrong-password" ||
+      error.code === "auth/user-not-found"
+    ) {
+      loginMessage.textContent = "Incorrect email or password.";
+    } else if (error.code === "auth/network-request-failed") {
+      loginMessage.textContent =
+        "Could not connect. Check your internet connection.";
+    } else if (error.code === "auth/too-many-requests") {
+      loginMessage.textContent = "Too many attempts. Please try again later.";
+    } else {
+      loginMessage.textContent = "Unable to log in. Please try again.";
+    }
+
+    console.error("Login error:", error.code);
+  } finally {
+    registerButton.disabled = false;
+    loginButton.disabled = false;
+
+    registerButton.textContent = "Create account";
+    loginButton.textContent = "Log in";
+  }
 });
