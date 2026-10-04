@@ -10,8 +10,10 @@ import {
   getFirestore,
   collection,
   addDoc,
+  getDocs,
+  query,
+  where,
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
 const db = getFirestore();
 
 const userColRef = collection(db, "users");
@@ -126,15 +128,16 @@ registerForm.addEventListener("submit", async (event) => {
     registerMessage.style.color = "green";
     registerMessage.style.fontWeight = "bold";
   } catch (error) {
-  if (error.code === "auth/email-already-in-use") {
-    registerMessage.textContent = "This email is already registered. Please log in.";
-  } else {
-    registerMessage.textContent = "Account setup could not be completed.";
-  }
+    if (error.code === "auth/email-already-in-use") {
+      registerMessage.textContent =
+        "This email is already registered. Please log in.";
+    } else {
+      registerMessage.textContent = "Account setup could not be completed.";
+    }
 
-  registerMessage.style.color = "red";
-  console.error("Registration error:", error.code);
-} finally {
+    registerMessage.style.color = "red";
+    console.error("Registration error:", error.code);
+  } finally {
     registerButton.disabled = false;
     loginButton.disabled = false;
 
@@ -174,10 +177,37 @@ loginForm.addEventListener("submit", async (event) => {
   loginButton.disabled = true;
   loginButton.textContent = "Logging in...";
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
 
-    loginMessage.textContent = "Logged in successfully!";
-    loginMessage.style.color = "green";
+    const userProfilesQuery = query(
+      userColRef,
+      where("uid", "==", userCredential.user.uid),
+    );
+
+    const userProfilesSnapshot = await getDocs(userProfilesQuery);
+    const userProfiles = userProfilesSnapshot.docs;
+
+    if (userProfiles.length === 0) {
+      loginMessage.textContent =
+        "Your account profile could not be found. Please contact support.";
+      await signOut(auth);
+      return;
+    }
+
+    const userProfile = userProfiles[0].data();
+
+    if (userProfile.role === "student") {
+      window.location.href = "./student-dashboard.html";
+    } else if (userProfile.role === "instructor") {
+      window.location.href = "./instructor-dashboard.html";
+    } else {
+      loginMessage.textContent = "Your account has an unrecognised role.";
+      await signOut(auth);
+    }
   } catch (error) {
     if (
       error.code === "auth/invalid-credential" ||
