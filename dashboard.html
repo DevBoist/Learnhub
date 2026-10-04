@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your LearnHub workspace for courses and assignments.">
+    <title>LearnHub | Dashboard</title>
+    <link rel="stylesheet" href="./css/dashboard.css">
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <div class="dashboard-layout">
+       
+        <aside class="sidebar">
+            <a class="brand" href="./dashboard.html" aria-label="LearnHub dashboard">
+                <span class="brand-mark" aria-hidden="true">LH</span>
+                <span class="brand-name">LearnHub<span class="brand-dot">.</span></span>
+            </a>
+
+            <p class="sidebar-label">YOUR WORKSPACE</p>
+            <nav class="sidebar-nav" aria-label="Dashboard sections">
+                <a class="nav-link is-active" href="#overview">Overview</a>
+                <a class="nav-link" href="#available-courses">Explore courses</a>
+                <a class="nav-link" href="#my-courses">My courses</a>
+                <a class="nav-link" href="#assignments">Assignments</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>A little progress,<br>every day.</p>
+                <span>Your next chapter starts here.</span>
+            </div>
+        </aside>
+
+        <main class="dashboard-main" id="main-content">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">LEARNING WORKSPACE</p>
+                    <h1>Dashboard</h1>
+                    <p class="page-intro">Your courses and coursework, together.</p>
+                </div>
+                <div class="account-actions">
+                    <!-- JavaScript will fill the role and connect the logout button. -->
+                    <span class="user-role" id="user-role" hidden></span>
+                    <button class="secondary-button" id="logout-button" type="button" disabled>
+                        Log out
+                    </button>
+                </div>
+            </header>
+
+            <section class="welcome-card" id="overview" aria-labelledby="welcome-heading">
+                <p class="welcome-kicker">A FRESH START</p>
+                <h2 id="welcome-heading">Welcome to your learning space.</h2>
+                <p class="welcome-description">
+                    Find something that interests you, build your skills, and take your next step.
+                </p>
+                <a class="welcome-link" href="#available-courses">
+                    Explore courses <span aria-hidden="true">&rarr;</span>
+                </a>
+            </section>
+
+            <div class="dashboard-content">
+                <section class="content-section" id="available-courses" aria-labelledby="available-courses-heading">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">DISCOVER</p>
+                            <h2 id="available-courses-heading">Explore courses</h2>
+                        </div>
+                        <span class="section-tag">COURSE CATALOGUE</span>
+                    </div>
+                    <p class="section-description">Find a course and start learning at your own pace.</p>
+
+                  
+                    <div class="course-list" id="available-course-list">
+                        <div class="empty-state">
+                            <span class="empty-icon" aria-hidden="true">&plus;</span>
+                            <h3>A new skill starts here.</h3>
+                            <p>Available courses will appear here for you to explore and join.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content-section" id="my-courses" aria-labelledby="my-courses-heading">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">YOUR LEARNING</p>
+                            <h2 id="my-courses-heading">My courses</h2>
+                        </div>
+                        <span class="section-tag">ENROLLED COURSES</span>
+                    </div>
+                    <p class="section-description">Keep the courses you have joined close at hand.</p>
+
+                    <div class="course-list" id="enrolled-course-list">
+                        <div class="empty-state">
+                            <span class="empty-icon" aria-hidden="true">&rarr;</span>
+                            <h3>Build your learning list.</h3>
+                            <p>The courses you enrol in will appear here.</p>
+                            <a class="text-link" href="#available-courses">Find a course</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content-section" id="assignments" aria-labelledby="assignments-heading">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">STAY ON TRACK</p>
+                            <h2 id="assignments-heading">Assignments</h2>
+                        </div>
+                        <div class="status-guide" aria-label="Assignment status guide">
+                            <span class="status-badge pending">Pending</span>
+                            <span class="status-badge submitted">Submitted</span>
+                            <span class="status-badge overdue">Overdue</span>
+                        </div>
+                    </div>
+                    <p class="section-description">Keep track of deadlines and the work ahead.</p>
+
+                    <div class="assignment-list" id="assignment-list">
+                        <div class="empty-state">
+                            <span class="empty-icon" aria-hidden="true">&#10003;</span>
+                            <h3>A place for your coursework.</h3>
+                            <p>Assignments for your enrolled courses will appear here.</p>
+                        </div>
+                    </div>
+                </section>
+
+               
+                <section class="content-section" id="instructor-tools" aria-labelledby="instructor-tools-heading" hidden>
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">TEACH &amp; SHARE</p>
+                            <h2 id="instructor-tools-heading">Instructor tools</h2>
+                        </div>
+                    </div>
+                    <p class="section-description">Create courses and share assignments with your students.</p>
+                    <div class="instructor-actions">
+                        <button class="primary-button" id="create-course-button" type="button" disabled>
+                            Create course
+                        </button>
+                        <button class="secondary-button" id="create-assignment-button" type="button" disabled>
+                            Create assignment
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <footer class="page-footer">LearnHub &mdash; for curious minds. For what comes next.</footer>
+        </main>
+    </div>
+</body>
+</html>

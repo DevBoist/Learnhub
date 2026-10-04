@@ -1,0 +1,674 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LearnHub | Instructor Dashboard</title>
+    <link rel="stylesheet" href="./css/dashboard.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="dashboard-layout">
+      <aside class="sidebar">
+        <a class="brand" href="./instructor-dashboard.html"
+          ><span class="brand-mark">LH</span
+          ><span class="brand-name"
+            >LearnHub<span class="brand-dot">.</span></span
+          ></a
+        >
+        <p class="sidebar-label">TEACHING WORKSPACE</p>
+        <nav class="sidebar-nav" aria-label="Dashboard sections">
+          <a class="nav-link" href="#overview">Overview</a>
+          <a class="nav-link" href="#my-courses">My courses</a>
+          <a class="nav-link" href="#create-course">Create course</a>
+          <a class="nav-link" href="#assignments">Assignments</a>
+          <a class="nav-link" href="#create-assignment">Create assignment</a>
+        </nav>
+        <div class="sidebar-footer">
+          <p>Share what you know.</p>
+          <span>Help your students take their next step.</span>
+        </div>
+      </aside>
+      <main class="dashboard-main" id="main-content">
+        <header class="page-header">
+          <div>
+            <p class="eyebrow">TEACHING WORKSPACE</p>
+            <h1>Instructor dashboard</h1>
+            <p class="page-intro">
+              Manage your courses and set work for your students.
+            </p>
+          </div>
+          <div class="account-actions">
+            <details class="profile-menu">
+              <summary>
+                <span class="profile-label">Profile</span
+                ><span class="profile-name" id="profile-name">Your name</span
+                ><span class="user-role" id="user-role">Instructor</span>
+              </summary>
+              <div class="profile-details">
+                <p class="eyebrow">YOUR ACCOUNT</p>
+                <p id="profile-email">Your email will appear here.</p>
+                <p>Instructor account</p>
+              </div>
+            </details>
+            <button
+              class="secondary-button"
+              id="logout-button"
+              type="button"
+              disabled
+            >
+              Log out
+            </button>
+          </div>
+        </header>
+        <section
+          class="welcome-card"
+          id="overview"
+          aria-labelledby="welcome-heading"
+        >
+          <p class="welcome-kicker">MAKE ROOM FOR LEARNING</p>
+          <h2 id="welcome-heading">Build your next course.</h2>
+          <p class="welcome-description">
+            Bring your lessons together and give students a clear path through
+            their coursework.
+          </p>
+          <a class="welcome-link" href="#create-course">Create a course</a>
+        </section>
+        <div class="dashboard-content">
+          <section
+            class="content-section"
+            id="my-courses"
+            aria-labelledby="courses-heading"
+          >
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">YOUR TEACHING</p>
+                <h2 id="courses-heading">My courses</h2>
+              </div>
+            </div>
+            <p class="section-description">
+              Courses you create will be available for students to enrol in.
+            </p>
+            <div class="course-list" id="instructor-course-list">
+              <div class="empty-state">
+                <h3>Your courses belong here.</h3>
+                <p>
+                  Once your courses are loaded, you can view them in this space.
+                </p>
+                <a class="text-link" href="#create-course">Create a course</a>
+              </div>
+            </div>
+          </section>
+          <section
+            class="content-section"
+            id="create-course"
+            aria-labelledby="create-course-heading"
+          >
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">COURSE DETAILS</p>
+                <h2 id="create-course-heading">Create course</h2>
+              </div>
+            </div>
+            <form class="dashboard-form" id="create-course-form" novalidate>
+              <div class="form-field">
+                <label for="course-title">Course title</label
+                ><input
+                  id="course-title"
+                  name="title"
+                  type="text"
+                  placeholder="Introduction to JavaScript"
+                />
+              </div>
+              <div class="form-field">
+                <label for="course-code">Course code</label
+                ><input
+                  id="course-code"
+                  name="code"
+                  type="text"
+                  placeholder="JS101"
+                />
+              </div>
+              <div class="form-field">
+                <label for="course-description">Description</label
+                ><textarea
+                  id="course-description"
+                  name="description"
+                  rows="3"
+                  placeholder="What will your students learn?"
+                ></textarea>
+              </div>
+              <button
+                class="primary-button"
+                id="create-course-button"
+                type="submit"
+                disabled
+              >
+                Create course
+              </button>
+              <p id="course-message" role="status" aria-live="polite"></p>
+            </form>
+          </section>
+          <section
+            class="content-section"
+            id="assignments"
+            aria-labelledby="assignments-heading"
+          >
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">COURSEWORK</p>
+                <h2 id="assignments-heading">My assignments</h2>
+              </div>
+              <a class="text-link" href="#create-assignment"
+                >Create assignment</a
+              >
+            </div>
+            <p class="section-description">
+              View the assignments and deadlines you set for your courses.
+            </p>
+            <div class="assignment-list" id="instructor-assignment-list">
+              <div class="empty-state">
+                <h3>Keep your coursework organised.</h3>
+                <p>Your course assignments will appear here.</p>
+              </div>
+            </div>
+          </section>
+          <section
+            class="content-section full-width"
+            id="create-assignment"
+            aria-labelledby="create-assignment-heading"
+          >
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">SET THE NEXT TASK</p>
+                <h2 id="create-assignment-heading">Create assignment</h2>
+              </div>
+            </div>
+            <form class="dashboard-form" id="create-assignment-form" novalidate>
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="assignment-title">Title</label
+                  ><input
+                    id="assignment-title"
+                    name="title"
+                    type="text"
+                    placeholder="Assignment title"
+                  />
+                </div>
+                <div class="form-field">
+                  <label for="assignment-course">Course</label
+                  ><select id="assignment-course" name="course">
+                    <option value="" selected disabled>
+                      Select one of your courses
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="assignment-description">Description</label
+                ><textarea
+                  id="assignment-description"
+                  name="description"
+                  rows="4"
+                  placeholder="Explain what students need to do."
+                ></textarea>
+              </div>
+              <fieldset class="deadline-picker">
+                <legend>Submission deadline</legend>
+                <div class="picker-grid">
+                  <section
+                    class="picker-card"
+                    aria-labelledby="date-picker-heading"
+                  >
+                    <h3 class="picker-title" id="date-picker-heading">
+                      Select date
+                    </h3>
+                    <div class="calendar-toolbar">
+                      <button
+                        type="button"
+                        class="month-button"
+                        id="previous-month"
+                        aria-label="Previous month"
+                        disabled
+                      >
+                        &lsaquo;
+                      </button>
+                      <p id="calendar-month">October 2026</p>
+                      <button
+                        type="button"
+                        class="month-button"
+                        id="next-month"
+                        aria-label="Next month"
+                        disabled
+                      >
+                        &rsaquo;
+                      </button>
+                    </div>
+                    <div class="calendar-weekdays" aria-hidden="true">
+                      <span>Sun</span><span>Mon</span><span>Tue</span
+                      ><span>Wed</span><span>Thu</span><span>Fri</span
+                      ><span>Sat</span>
+                    </div>
+                    <div class="calendar-days" id="calendar-days">
+                      <span
+                        class="calendar-day outside-month"
+                        aria-hidden="true"
+                        >27</span
+                      >
+                      <span
+                        class="calendar-day outside-month"
+                        aria-hidden="true"
+                        >28</span
+                      >
+                      <span
+                        class="calendar-day outside-month"
+                        aria-hidden="true"
+                        >29</span
+                      >
+                      <span
+                        class="calendar-day outside-month"
+                        aria-hidden="true"
+                        >30</span
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-01"
+                          aria-label="October 1, 2026"
+                        /><span>1</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-02"
+                          aria-label="October 2, 2026"
+                        /><span>2</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-03"
+                          aria-label="October 3, 2026"
+                        /><span>3</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-04"
+                          aria-label="October 4, 2026"
+                        /><span>4</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-05"
+                          aria-label="October 5, 2026"
+                        /><span>5</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-06"
+                          aria-label="October 6, 2026"
+                        /><span>6</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-07"
+                          aria-label="October 7, 2026"
+                        /><span>7</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-08"
+                          aria-label="October 8, 2026"
+                        /><span>8</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-09"
+                          aria-label="October 9, 2026"
+                        /><span>9</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-10"
+                          aria-label="October 10, 2026"
+                        /><span>10</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-11"
+                          aria-label="October 11, 2026"
+                        /><span>11</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-12"
+                          aria-label="October 12, 2026"
+                        /><span>12</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-13"
+                          aria-label="October 13, 2026"
+                        /><span>13</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-14"
+                          aria-label="October 14, 2026"
+                        /><span>14</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-15"
+                          aria-label="October 15, 2026"
+                        /><span>15</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-16"
+                          aria-label="October 16, 2026"
+                        /><span>16</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-17"
+                          aria-label="October 17, 2026"
+                        /><span>17</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-18"
+                          aria-label="October 18, 2026"
+                        /><span>18</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-19"
+                          aria-label="October 19, 2026"
+                        /><span>19</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-20"
+                          aria-label="October 20, 2026"
+                        /><span>20</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-21"
+                          aria-label="October 21, 2026"
+                        /><span>21</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-22"
+                          aria-label="October 22, 2026"
+                        /><span>22</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-23"
+                          aria-label="October 23, 2026"
+                        /><span>23</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-24"
+                          aria-label="October 24, 2026"
+                        /><span>24</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-25"
+                          aria-label="October 25, 2026"
+                        /><span>25</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-26"
+                          aria-label="October 26, 2026"
+                        /><span>26</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-27"
+                          aria-label="October 27, 2026"
+                        /><span>27</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-28"
+                          aria-label="October 28, 2026"
+                        /><span>28</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-29"
+                          aria-label="October 29, 2026"
+                        /><span>29</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-30"
+                          aria-label="October 30, 2026"
+                        /><span>30</span></label
+                      >
+                      <label class="calendar-day"
+                        ><input
+                          type="radio"
+                          name="dueDate"
+                          value="2026-10-31"
+                          aria-label="October 31, 2026"
+                        /><span>31</span></label
+                      >
+                    </div>
+                    <p class="picker-note">
+                      Select one date for this assignment.
+                    </p>
+                  </section>
+                  <section
+                    class="picker-card time-card"
+                    aria-labelledby="time-picker-heading"
+                  >
+                    <h3 class="picker-title" id="time-picker-heading">
+                      Set time
+                    </h3>
+                    <div class="clock-face" aria-hidden="true">
+                      <span class="clock-number twelve">12</span
+                      ><span class="clock-number three">3</span
+                      ><span class="clock-number six">6</span
+                      ><span class="clock-number nine">9</span>
+                      <span
+                        class="clock-hand hour-hand"
+                        id="clock-hour-hand"
+                      ></span>
+                      <span
+                        class="clock-hand minute-hand"
+                        id="clock-minute-hand"
+                      ></span>
+                      <span class="clock-center"></span>
+                    </div>
+                    <div class="time-controls">
+                      <div>
+                        <label for="deadline-hour">Hour</label
+                        ><select id="deadline-hour" name="dueHour">
+                          <option value="" selected disabled>HH</option>
+                          <option value="1">01</option>
+                          <option value="2">02</option>
+                          <option value="3">03</option>
+                          <option value="4">04</option>
+                          <option value="5">05</option>
+                          <option value="6">06</option>
+                          <option value="7">07</option>
+                          <option value="8">08</option>
+                          <option value="9">09</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label for="deadline-minute">Minute</label
+                        ><select id="deadline-minute" name="dueMinute">
+                          <option value="" selected disabled>MM</option>
+                          <option value="0">00</option>
+                          <option value="1">01</option>
+                          <option value="2">02</option>
+                          <option value="3">03</option>
+                          <option value="4">04</option>
+                          <option value="5">05</option>
+                          <option value="6">06</option>
+                          <option value="7">07</option>
+                          <option value="8">08</option>
+                          <option value="9">09</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
+                          <option value="13">13</option>
+                          <option value="14">14</option>
+                          <option value="15">15</option>
+                          <option value="16">16</option>
+                          <option value="17">17</option>
+                          <option value="18">18</option>
+                          <option value="19">19</option>
+                          <option value="20">20</option>
+                          <option value="21">21</option>
+                          <option value="22">22</option>
+                          <option value="23">23</option>
+                          <option value="24">24</option>
+                          <option value="25">25</option>
+                          <option value="26">26</option>
+                          <option value="27">27</option>
+                          <option value="28">28</option>
+                          <option value="29">29</option>
+                          <option value="30">30</option>
+                          <option value="31">31</option>
+                          <option value="32">32</option>
+                          <option value="33">33</option>
+                          <option value="34">34</option>
+                          <option value="35">35</option>
+                          <option value="36">36</option>
+                          <option value="37">37</option>
+                          <option value="38">38</option>
+                          <option value="39">39</option>
+                          <option value="40">40</option>
+                          <option value="41">41</option>
+                          <option value="42">42</option>
+                          <option value="43">43</option>
+                          <option value="44">44</option>
+                          <option value="45">45</option>
+                          <option value="46">46</option>
+                          <option value="47">47</option>
+                          <option value="48">48</option>
+                          <option value="49">49</option>
+                          <option value="50">50</option>
+                          <option value="51">51</option>
+                          <option value="52">52</option>
+                          <option value="53">53</option>
+                          <option value="54">54</option>
+                          <option value="55">55</option>
+                          <option value="56">56</option>
+                          <option value="57">57</option>
+                          <option value="58">58</option>
+                          <option value="59">59</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label for="deadline-period">Period</label
+                        ><select id="deadline-period" name="duePeriod">
+                          <option value="AM">AM</option>
+                          <option value="PM">PM</option>
+                        </select>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      class="primary-button set-time-button"
+                      id="set-deadline-time"
+                      disabled
+                    >
+                      Set time
+                    </button>
+                    <p class="picker-note">Use your device's local time.</p>
+                  </section>
+                </div>
+                <p class="field-help" id="deadline-summary" role="status">
+                  Choose a date and time for submission.
+                </p>
+              </fieldset>
+              <button
+                class="primary-button"
+                id="create-assignment-button"
+                type="submit"
+                disabled
+              >
+                Create assignment
+              </button>
+              <p id="assignment-message" role="status" aria-live="polite"></p>
+            </form>
+          </section>
+        </div>
+        <footer class="page-footer">
+          LearnHub. A place to teach and learn.
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>
