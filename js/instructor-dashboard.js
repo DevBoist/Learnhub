@@ -16,6 +16,72 @@ import {
 
 const db = getFirestore();
 const userColRef = collection(db, "users");
+const courseColRef = collection(db, "courses");
+const instructorCourseList = document.getElementById("instructor-course-list");
+const assignmentCourseSelect = document.getElementById("assignment-course");
+
+async function loadInstructorCourses(instructorId) {
+  instructorCourseList.textContent = "Loading your courses...";
+  const selectedCourseId = assignmentCourseSelect.value;
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = "Loading your courses...";
+  placeholder.disabled = true;
+  placeholder.selected = true;
+  assignmentCourseSelect.replaceChildren(placeholder);
+  assignmentCourseSelect.disabled = true;
+
+  try {
+    const instructorCoursesQuery = query(
+      courseColRef,
+      where("instructorId", "==", instructorId),
+    );
+    const coursesSnapshot = await getDocs(instructorCoursesQuery);
+
+    instructorCourseList.replaceChildren();
+
+    if (coursesSnapshot.empty) {
+      instructorCourseList.textContent = "You have no courses yet. Create your first course below.";
+      placeholder.textContent = "Create a course first";
+      return;
+    }
+
+    coursesSnapshot.docs.forEach((courseDocument) => {
+      const course = courseDocument.data();
+      const courseOption = document.createElement("option");
+      courseOption.value = courseDocument.id;
+      courseOption.textContent = `${course.code} - ${course.title}`;
+      assignmentCourseSelect.append(courseOption);
+
+      if (courseDocument.id === selectedCourseId) {
+        courseOption.selected = true;
+      }
+
+      const courseCard = document.createElement("article");
+      courseCard.classList.add("course-card");
+
+      const titleElement = document.createElement("h3");
+      titleElement.textContent = course.title;
+
+      const codeElement = document.createElement("p");
+      codeElement.textContent = `Course code: ${course.code}`;
+
+      const descriptionElement = document.createElement("p");
+      descriptionElement.textContent = course.description;
+
+      courseCard.append(titleElement, codeElement, descriptionElement);
+      instructorCourseList.append(courseCard);
+    });
+    placeholder.textContent = "Select one of your courses";
+    assignmentCourseSelect.disabled = false;
+  } catch (error) {
+    assignmentCourseSelect.replaceChildren(placeholder);
+    placeholder.textContent = "Could not load courses. Refresh to try again.";
+    assignmentCourseSelect.disabled = true;
+    instructorCourseList.textContent = "Could not load your courses. Please refresh to try again.";
+    console.error("Course loading error:", error.code || error.message);
+  }
+}
 
 const logoutButton = document.getElementById("logout-button");
 const profileName = document.getElementById("profile-name");
@@ -67,6 +133,7 @@ onAuthStateChanged(auth, async (user) => {
       `${userProfile.firstname} ${userProfile.lastname}`.trim();
     profileRole.textContent = "Instructor";
     profileEmail.textContent = userProfile.email || user.email;
+    await loadInstructorCourses(user.uid);
   } catch (error) {
     profileName.textContent = "Profile unavailable";
     profileEmail.textContent = "Could not load your account details.";
@@ -94,7 +161,6 @@ if (!title || !code || !description) {
   courseMessage.style.color = "red";
   return;
 }
-const courseColRef = collection(db, "courses");
 
 const currentUser = auth.currentUser;
 
@@ -115,6 +181,7 @@ try {
   courseMessage.textContent = "Course created successfully.";
   courseMessage.style.color = "green";
   createCourseForm.reset();
+  await loadInstructorCourses(currentUser.uid);
 } catch (error) {
   courseMessage.textContent = "Could not create the course. Please try again.";
   courseMessage.style.color = "red";

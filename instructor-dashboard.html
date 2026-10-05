@@ -30,14 +30,10 @@
         </div>
       </aside>
       <main class="dashboard-main" id="main-content">
-        <header class="page-header">
-          <div>
-            <p class="eyebrow">TEACHING WORKSPACE</p>
-            <h1>Instructor dashboard</h1>
-            <p class="page-intro">
-              Manage your courses and set work for your students.
-            </p>
-          </div>
+        <header class="dashboard-topbar">
+          <p class="breadcrumb">
+            <span>Workspace</span><span aria-hidden="true">/</span>Instructor overview
+          </p>
           <div class="account-actions">
             <details class="profile-menu">
               <summary>
@@ -55,25 +51,47 @@
               class="secondary-button"
               id="logout-button"
               type="button"
-
             >
               Log out
             </button>
           </div>
         </header>
-        <section
-          class="welcome-card"
-          id="overview"
-          aria-labelledby="welcome-heading"
-        >
-          <p class="welcome-kicker">MAKE ROOM FOR LEARNING</p>
-          <h2 id="welcome-heading">Build your next course.</h2>
-          <p class="welcome-description">
-            Bring your lessons together and give students a clear path through
-            their coursework.
-          </p>
-          <a class="welcome-link" href="#create-course">Create a course</a>
-        </section>
+        <div class="dashboard-page">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">TEACHING WORKSPACE</p>
+              <h1>Good teaching starts with clarity.</h1>
+              <p class="page-intro">
+                Manage your courses and give students their next step.
+              </p>
+            </div>
+          </header>
+
+          <section class="overview-hero" id="overview" aria-labelledby="welcome-heading">
+            <div class="welcome-card">
+              <p class="welcome-kicker">YOUR TEACHING SPACE</p>
+              <h2 id="welcome-heading">Give your students a clear next step.</h2>
+              <p class="welcome-description">
+                Create a course, then add an assignment with a deadline.
+              </p>
+            </div>
+            <aside class="overview-action-card instructor-overview-actions">
+              <a class="primary-button" href="#create-course">Create course</a>
+              <a class="secondary-button" href="#create-assignment">Create assignment</a>
+            </aside>
+          </section>
+
+          <nav class="overview-links" aria-label="Dashboard shortcuts">
+            <a class="overview-link" href="#my-courses">
+              <span>YOUR TEACHING</span><strong>Manage courses</strong>
+            </a>
+            <a class="overview-link" href="#assignments">
+              <span>COURSEWORK</span><strong>View assignments</strong>
+            </a>
+            <a class="overview-link" href="#create-course">
+              <span>GET STARTED</span><strong>Create a course</strong>
+            </a>
+          </nav>
         <div class="dashboard-content">
           <section
             class="content-section"
@@ -657,9 +675,10 @@
             </form>
           </section>
         </div>
-        <footer class="page-footer">
-          LearnHub. A place to teach and learn.
-        </footer>
+          <footer class="page-footer">
+            LearnHub. A place to teach and learn.
+          </footer>
+        </div>
       </main>
     </div>
     <script type="module" src="./js/instructor-dashboard.js"></script>
