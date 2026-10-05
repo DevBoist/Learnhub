@@ -1,6 +1,9 @@
 import { auth } from "./firebase.js";
 
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import {
+  onAuthStateChanged,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
   getFirestore,
@@ -12,10 +15,13 @@ import {
 
 const db = getFirestore();
 const userColRef = collection(db, "users");
+const courseColRef = collection(db, "courses");
+const availableCourseList = document.getElementById("available-course-list");
 
 const profileName = document.getElementById("profile-name");
 const profileRole = document.getElementById("user-role");
 const profileEmail = document.getElementById("profile-email");
+const logoutButton = document.getElementById("logout-button");
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
@@ -24,10 +30,7 @@ onAuthStateChanged(auth, async (user) => {
   }
 
   try {
-    const userProfilesQuery = query(
-      userColRef,
-      where("uid", "==", user.uid),
-    );
+    const userProfilesQuery = query(userColRef, where("uid", "==", user.uid));
 
     const userProfilesSnapshot = await getDocs(userProfilesQuery);
 
@@ -53,9 +56,40 @@ onAuthStateChanged(auth, async (user) => {
       `${userProfile.firstname} ${userProfile.lastname}`.trim();
     profileRole.textContent = "Student";
     profileEmail.textContent = userProfile.email || user.email;
+
+    const coursesSnapshot = await getDocs(courseColRef);
+    const courses = coursesSnapshot.docs.map((courseDocument) => {
+      const courseData = courseDocument.data();
+
+      return {
+        id: courseDocument.id,
+        title: courseData.title,
+        code: courseData.code,
+        description: courseData.description,
+        instructorId: courseData.instructorId,
+      };
+    });
+    if (courses.length > 0) {
+      availableCourseList.replaceChildren();
+    }
+
+    courses.forEach((course) => {
+      const titleElement = document.createElement("h3");
+      titleElement.textContent = course.title;
+      availableCourseList.append(titleElement);
+    });
   } catch (error) {
     profileName.textContent = "Profile unavailable";
     profileEmail.textContent = "Could not load your account details.";
     console.error("Student profile error:", error.code || error.message);
+  }
+});
+
+logoutButton.addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+    window.location.href = "./index.html";
+  } catch (error) {
+    console.error("Logout error:", error.code);
   }
 });
