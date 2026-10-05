@@ -41,12 +41,10 @@
       </aside>
 
       <main class="dashboard-main" id="main-content">
-        <header class="page-header">
-          <div>
-            <p class="eyebrow">LEARNING WORKSPACE</p>
-            <h1>Student dashboard</h1>
-            <p class="page-intro">Your courses and coursework, together.</p>
-          </div>
+        <header class="dashboard-topbar">
+          <p class="breadcrumb">
+            <span>Workspace</span><span aria-hidden="true">/</span>Student overview
+          </p>
           <div class="account-actions">
             <details class="profile-menu">
               <summary>
@@ -70,23 +68,46 @@
           </div>
         </header>
 
-        <section
-          class="welcome-card"
-          id="overview"
-          aria-labelledby="welcome-heading"
-        >
-          <p class="welcome-kicker">A FRESH START</p>
-          <h2 id="welcome-heading">Welcome to your learning space.</h2>
-          <p class="welcome-description">
-            Find something that interests you, build your skills, and take your
-            next step.
-          </p>
-          <a class="welcome-link" href="#available-courses">
-            Explore courses <span aria-hidden="true">&rarr;</span>
-          </a>
-        </section>
+        <div class="dashboard-page">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">YOUR LEARNING SPACE</p>
+              <h1>Keep your momentum.</h1>
+              <p class="page-intro">
+                A clear view of your courses and what comes next.
+              </p>
+            </div>
+          </header>
 
-        <div class="dashboard-content">
+          <section class="overview-hero" id="overview" aria-labelledby="welcome-heading">
+            <div class="welcome-card">
+              <p class="welcome-kicker">THIS WEEK</p>
+              <h2 id="welcome-heading">One small step. A stronger semester.</h2>
+              <p class="welcome-description">
+                Keep learning at your pace. Your courses and assignments are here
+                when you need them.
+              </p>
+            </div>
+            <aside class="overview-action-card">
+              <p class="eyebrow">READY TO LEARN?</p>
+              <h2>Find your next course.</h2>
+              <a class="primary-button" href="#available-courses">Explore courses</a>
+            </aside>
+          </section>
+
+          <nav class="overview-links" aria-label="Dashboard shortcuts">
+            <a class="overview-link" href="#available-courses">
+              <span>DISCOVER</span><strong>Explore courses</strong>
+            </a>
+            <a class="overview-link" href="#my-courses">
+              <span>YOUR LEARNING</span><strong>My courses</strong>
+            </a>
+            <a class="overview-link" href="#assignments">
+              <span>STAY ON TRACK</span><strong>Assignments</strong>
+            </a>
+          </nav>
+
+          <div class="dashboard-content">
           <section
             class="content-section"
             id="available-courses"
@@ -166,11 +187,12 @@
               </div>
             </div>
           </section>
-        </div>
+          </div>
 
-        <footer class="page-footer">
-          LearnHub &mdash; for curious minds. For what comes next.
-        </footer>
+          <footer class="page-footer">
+            LearnHub &mdash; for curious minds. For what comes next.
+          </footer>
+        </div>
       </main>
     </div>
     <script type="module" src="./js/student-dashboard.js"></script>

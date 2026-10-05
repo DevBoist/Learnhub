@@ -11,12 +11,15 @@ import {
   getDocs,
   query,
   where,
+  addDoc,
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 const db = getFirestore();
 const userColRef = collection(db, "users");
 const courseColRef = collection(db, "courses");
+const enrollmentColRef = collection(db, "enrollments");
 const availableCourseList = document.getElementById("available-course-list");
+const enrolledCourseList = document.getElementById("enrolled-course-list");
 
 const profileName = document.getElementById("profile-name");
 const profileRole = document.getElementById("user-role");
@@ -69,14 +72,107 @@ onAuthStateChanged(auth, async (user) => {
         instructorId: courseData.instructorId,
       };
     });
+
+    const studentEnrollmentsQuery = query(
+      enrollmentColRef,
+      where("studentId", "==", user.uid),
+    );
+    const studentEnrollmentsSnapshot = await getDocs(studentEnrollmentsQuery);
+    const enrolledCourseIds = new Set(
+      studentEnrollmentsSnapshot.docs.map(
+        (enrollmentDocument) => enrollmentDocument.data().courseId,
+      ),
+    );
+
+    const enrolledCourses = courses.filter((course) =>
+      enrolledCourseIds.has(course.id),
+    );
+
+    if (enrolledCourses.length > 0) {
+      enrolledCourseList.replaceChildren();
+
+      enrolledCourses.forEach((course) => {
+        const courseCard = document.createElement("article");
+        courseCard.classList.add("course-card");
+
+        const titleElement = document.createElement("h3");
+        titleElement.textContent = course.title;
+
+        const codeElement = document.createElement("p");
+        codeElement.textContent = `Course code: ${course.code}`;
+
+        const descriptionElement = document.createElement("p");
+        descriptionElement.textContent = course.description;
+
+        courseCard.append(titleElement, codeElement, descriptionElement);
+        enrolledCourseList.append(courseCard);
+      });
+    }
+
     if (courses.length > 0) {
       availableCourseList.replaceChildren();
     }
 
     courses.forEach((course) => {
+      const courseCard = document.createElement("article");
+      courseCard.classList.add("course-card");
+
       const titleElement = document.createElement("h3");
       titleElement.textContent = course.title;
-      availableCourseList.append(titleElement);
+
+      const codeElement = document.createElement("p");
+      codeElement.textContent = `Course code: ${course.code}`;
+
+      const descriptionElement = document.createElement("p");
+      descriptionElement.textContent = course.description;
+
+      const enrollButton = document.createElement("button");
+      enrollButton.type = "button";
+      enrollButton.classList.add("secondary-button");
+      const isAlreadyEnrolled = enrolledCourseIds.has(course.id);
+      enrollButton.textContent = isAlreadyEnrolled ? "Enrolled" : "Enroll";
+      enrollButton.disabled = isAlreadyEnrolled;
+
+      enrollButton.addEventListener("click", async () => {
+        enrollButton.disabled = true;
+        enrollButton.textContent = "Checking...";
+
+        try {
+          const existingEnrollmentQuery = query(
+            enrollmentColRef,
+            where("studentId", "==", user.uid),
+            where("courseId", "==", course.id),
+          );
+          const existingEnrollmentSnapshot = await getDocs(
+            existingEnrollmentQuery,
+          );
+
+          if (!existingEnrollmentSnapshot.empty) {
+            enrollButton.textContent = "Already enrolled";
+            return;
+          }
+
+          await addDoc(enrollmentColRef, {
+            studentId: user.uid,
+            courseId: course.id,
+            enrolledAt: new Date(),
+          });
+
+          enrollButton.textContent = "Enrolled";
+        } catch (error) {
+          enrollButton.disabled = false;
+          enrollButton.textContent = "Enroll";
+          console.error("Course enrollment error:", error.code || error.message);
+        }
+      });
+
+      courseCard.append(
+        titleElement,
+        codeElement,
+        descriptionElement,
+        enrollButton,
+      );
+      availableCourseList.append(courseCard);
     });
   } catch (error) {
     profileName.textContent = "Profile unavailable";
@@ -93,3 +189,7 @@ logoutButton.addEventListener("click", async () => {
     console.error("Logout error:", error.code);
   }
 });
+
+
+
+
