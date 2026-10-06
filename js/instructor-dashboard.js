@@ -1,4 +1,7 @@
 import { auth } from "./firebase.js";
+import { loadInstructorAssignments } from "./instructor-assignments.js";
+import { setupAssignmentForm } from "./create-assignment.js";
+import { getUserProfile } from "./user-profile.js";
 
 import {
   onAuthStateChanged,
@@ -15,7 +18,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 const db = getFirestore();
-const userColRef = collection(db, "users");
 const courseColRef = collection(db, "courses");
 const instructorCourseList = document.getElementById("instructor-course-list");
 const assignmentCourseSelect = document.getElementById("assignment-course");
@@ -104,20 +106,13 @@ onAuthStateChanged(auth, async (user) => {
   }
 
   try {
-    const userProfilesQuery = query(
-      userColRef,
-      where("uid", "==", user.uid),
-    );
+    const userProfile = await getUserProfile(user);
 
-    const userProfilesSnapshot = await getDocs(userProfilesQuery);
-
-    if (userProfilesSnapshot.empty) {
+    if (!userProfile) {
       await signOut(auth);
       window.location.replace("./index.html");
       return;
     }
-
-    const userProfile = userProfilesSnapshot.docs[0].data();
 
     if (userProfile.role !== "instructor") {
       if (userProfile.role === "student") {
@@ -133,7 +128,9 @@ onAuthStateChanged(auth, async (user) => {
       `${userProfile.firstname} ${userProfile.lastname}`.trim();
     profileRole.textContent = "Instructor";
     profileEmail.textContent = userProfile.email || user.email;
+    setupAssignmentForm();
     await loadInstructorCourses(user.uid);
+    await loadInstructorAssignments(user.uid);
   } catch (error) {
     profileName.textContent = "Profile unavailable";
     profileEmail.textContent = "Could not load your account details.";
@@ -146,9 +143,11 @@ const courseTitleInput = document.getElementById("course-title");
 const courseCodeInput = document.getElementById("course-code");
 const courseDescriptionInput = document.getElementById("course-description");
 const courseMessage = document.getElementById("course-message");
+const createCourseButton = createCourseForm.querySelector('button[type="submit"]');
 
 createCourseForm.addEventListener("submit", async (event) => {
   event.preventDefault();
+  if (createCourseButton.disabled) return;
 
   const title = courseTitleInput.value.trim();
   const code = courseCodeInput.value.trim();
@@ -156,36 +155,39 @@ createCourseForm.addEventListener("submit", async (event) => {
 
   courseMessage.textContent = "";
 
-if (!title || !code || !description) {
-  courseMessage.textContent = "Please fill in all course fields.";
-  courseMessage.style.color = "red";
-  return;
-}
+  if (!title || !code || !description) {
+    courseMessage.textContent = "Please fill in all course fields.";
+    courseMessage.style.color = "red";
+    return;
+  }
 
-const currentUser = auth.currentUser;
+  const currentUser = auth.currentUser;
+  if (!currentUser) {
+    courseMessage.textContent = "Please log in to create a course.";
+    courseMessage.style.color = "red";
+    return;
+  }
 
-if (!currentUser) {
-  courseMessage.textContent = "Please log in to create a course.";
-  courseMessage.style.color = "red";
-  return;
-}
+  createCourseButton.disabled = true;
+  createCourseButton.textContent = "Creating course...";
+  try {
+    await addDoc(courseColRef, {
+      title,
+      code,
+      description,
+      instructorId: currentUser.uid,
+    });
 
-try {
-  await addDoc(courseColRef, {
-    title,
-    code,
-    description,
-    instructorId: currentUser.uid,
-  });
-
-  courseMessage.textContent = "Course created successfully.";
-  courseMessage.style.color = "green";
-  createCourseForm.reset();
-  await loadInstructorCourses(currentUser.uid);
-} catch (error) {
-  courseMessage.textContent = "Could not create the course. Please try again.";
-  courseMessage.style.color = "red";
-  console.error("Course creation error:", error.code || error.message);
-}
-
+    courseMessage.textContent = "Course created successfully.";
+    courseMessage.style.color = "green";
+    createCourseForm.reset();
+    await loadInstructorCourses(currentUser.uid);
+  } catch (error) {
+    courseMessage.textContent = "Could not create the course. Please try again.";
+    courseMessage.style.color = "red";
+    console.error("Course creation error:", error.code || error.message);
+  } finally {
+    createCourseButton.disabled = false;
+    createCourseButton.textContent = "Create course";
+  }
 });

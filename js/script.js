@@ -1,4 +1,5 @@
 import { auth } from "./firebase.js";
+import { getUserProfile } from "./user-profile.js";
 
 import {
   createUserWithEmailAndPassword,
@@ -8,15 +9,10 @@ import {
 
 import {
   getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  where,
+  doc,
+  setDoc,
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 const db = getFirestore();
-
-const userColRef = collection(db, "users");
 
 const authCard = document.getElementById("auth-card");
 const showLoginButton = document.getElementById("show-login");
@@ -39,7 +35,6 @@ const registerPasswordInput = document.getElementById("register-password");
 const registerRoleSelect = document.getElementById("register-role");
 
 const registerMessage = document.getElementById("register-message");
-// login
 const loginForm = document.getElementById("login-form");
 const loginEmailInput = document.getElementById("login-email");
 const loginPasswordInput = document.getElementById("login-password");
@@ -54,10 +49,6 @@ registerForm.addEventListener("submit", async (event) => {
     return;
   }
   registerMessage.textContent = "";
-
-  const loginEmailInput = document.getElementById("login-email");
-  const loginPasswordInput = document.getElementById("login-password");
-  const loginMessage = document.getElementById("login-message");
 
   const firstName = firstNameInput.value.trim();
   const lastName = lastNameInput.value.trim();
@@ -101,7 +92,7 @@ registerForm.addEventListener("submit", async (event) => {
       password,
     );
 
-    const userDocSnapShot = await addDoc(userColRef, {
+    await setDoc(doc(db, "users", userCredential.user.uid), {
       uid: userCredential.user.uid,
       firstname: firstName,
       lastname: lastName,
@@ -111,7 +102,7 @@ registerForm.addEventListener("submit", async (event) => {
 
     registerButton.textContent = "Creating account.....";
 
-    const signedOut = await signOut(auth);
+    await signOut(auth);
 
     registerForm.reset();
 
@@ -146,7 +137,6 @@ registerForm.addEventListener("submit", async (event) => {
   }
 });
 
-// login
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   if (registerButton.disabled || loginButton.disabled) {
@@ -160,7 +150,6 @@ loginForm.addEventListener("submit", async (event) => {
   const email = loginEmailInput.value.trim();
   const password = loginPasswordInput.value;
 
-  // First, check the form.
   if (!email || !password) {
     loginMessage.textContent = "Please enter your email and password.";
     return;
@@ -183,22 +172,14 @@ loginForm.addEventListener("submit", async (event) => {
       password,
     );
 
-    const userProfilesQuery = query(
-      userColRef,
-      where("uid", "==", userCredential.user.uid),
-    );
+    const userProfile = await getUserProfile(userCredential.user);
 
-    const userProfilesSnapshot = await getDocs(userProfilesQuery);
-    const userProfiles = userProfilesSnapshot.docs;
-
-    if (userProfiles.length === 0) {
+    if (!userProfile) {
       loginMessage.textContent =
         "Your account profile could not be found. Please contact support.";
       await signOut(auth);
       return;
     }
-
-    const userProfile = userProfiles[0].data();
 
     if (userProfile.role === "student") {
       window.location.href = "./student-dashboard.html";

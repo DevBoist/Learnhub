@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -28,6 +28,7 @@
           <p>Share what you know.</p>
           <span>Help your students take their next step.</span>
         </div>
+        <button class="sidebar-logout" id="logout-button" type="button">Sign out</button>
       </aside>
       <main class="dashboard-main" id="main-content">
         <header class="dashboard-topbar">
@@ -47,13 +48,6 @@
                 <p>Instructor account</p>
               </div>
             </details>
-            <button
-              class="secondary-button"
-              id="logout-button"
-              type="button"
-            >
-              Log out
-            </button>
           </div>
         </header>
         <div class="dashboard-page">
@@ -130,8 +124,8 @@
             </div>
             <form class="dashboard-form" id="create-course-form" novalidate>
               <div class="form-field">
-                <label for="course-title">Course title</label
-                ><input
+                <label for="course-title">Course title</label>
+                <input
                   id="course-title"
                   name="title"
                   type="text"
@@ -139,8 +133,8 @@
                 />
               </div>
               <div class="form-field">
-                <label for="course-code">Course code</label
-                ><input
+                <label for="course-code">Course code</label>
+                <input
                   id="course-code"
                   name="code"
                   type="text"
@@ -148,8 +142,8 @@
                 />
               </div>
               <div class="form-field">
-                <label for="course-description">Description</label
-                ><textarea
+                <label for="course-description">Description</label>
+                <textarea
                   id="course-description"
                   name="description"
                   rows="3"
@@ -160,7 +154,6 @@
                 class="primary-button"
                 id="create-course-button"
                 type="submit"
-               
               >
                 Create course
               </button>
@@ -205,8 +198,8 @@
             <form class="dashboard-form" id="create-assignment-form" novalidate>
               <div class="form-row">
                 <div class="form-field">
-                  <label for="assignment-title">Title</label
-                  ><input
+                  <label for="assignment-title">Title</label>
+                  <input
                     id="assignment-title"
                     name="title"
                     type="text"
@@ -214,8 +207,8 @@
                   />
                 </div>
                 <div class="form-field">
-                  <label for="assignment-course">Course</label
-                  ><select id="assignment-course" name="course">
+                  <label for="assignment-course">Course</label>
+                  <select id="assignment-course" name="course">
                     <option value="" selected disabled>
                       Select one of your courses
                     </option>
@@ -223,8 +216,8 @@
                 </div>
               </div>
               <div class="form-field">
-                <label for="assignment-description">Description</label
-                ><textarea
+                <label for="assignment-description">Description</label>
+                <textarea
                   id="assignment-description"
                   name="description"
                   rows="4"
@@ -251,7 +244,7 @@
                       >
                         &lsaquo;
                       </button>
-                      <p id="calendar-month">October 2026</p>
+                      <p id="calendar-month" aria-live="polite"></p>
                       <button
                         type="button"
                         class="month-button"
@@ -267,276 +260,7 @@
                       ><span>Wed</span><span>Thu</span><span>Fri</span
                       ><span>Sat</span>
                     </div>
-                    <div class="calendar-days" id="calendar-days">
-                      <span
-                        class="calendar-day outside-month"
-                        aria-hidden="true"
-                        >27</span
-                      >
-                      <span
-                        class="calendar-day outside-month"
-                        aria-hidden="true"
-                        >28</span
-                      >
-                      <span
-                        class="calendar-day outside-month"
-                        aria-hidden="true"
-                        >29</span
-                      >
-                      <span
-                        class="calendar-day outside-month"
-                        aria-hidden="true"
-                        >30</span
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-01"
-                          aria-label="October 1, 2026"
-                        /><span>1</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-02"
-                          aria-label="October 2, 2026"
-                        /><span>2</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-03"
-                          aria-label="October 3, 2026"
-                        /><span>3</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-04"
-                          aria-label="October 4, 2026"
-                        /><span>4</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-05"
-                          aria-label="October 5, 2026"
-                        /><span>5</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-06"
-                          aria-label="October 6, 2026"
-                        /><span>6</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-07"
-                          aria-label="October 7, 2026"
-                        /><span>7</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-08"
-                          aria-label="October 8, 2026"
-                        /><span>8</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-09"
-                          aria-label="October 9, 2026"
-                        /><span>9</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-10"
-                          aria-label="October 10, 2026"
-                        /><span>10</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-11"
-                          aria-label="October 11, 2026"
-                        /><span>11</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-12"
-                          aria-label="October 12, 2026"
-                        /><span>12</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-13"
-                          aria-label="October 13, 2026"
-                        /><span>13</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-14"
-                          aria-label="October 14, 2026"
-                        /><span>14</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-15"
-                          aria-label="October 15, 2026"
-                        /><span>15</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-16"
-                          aria-label="October 16, 2026"
-                        /><span>16</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-17"
-                          aria-label="October 17, 2026"
-                        /><span>17</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-18"
-                          aria-label="October 18, 2026"
-                        /><span>18</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-19"
-                          aria-label="October 19, 2026"
-                        /><span>19</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-20"
-                          aria-label="October 20, 2026"
-                        /><span>20</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-21"
-                          aria-label="October 21, 2026"
-                        /><span>21</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-22"
-                          aria-label="October 22, 2026"
-                        /><span>22</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-23"
-                          aria-label="October 23, 2026"
-                        /><span>23</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-24"
-                          aria-label="October 24, 2026"
-                        /><span>24</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-25"
-                          aria-label="October 25, 2026"
-                        /><span>25</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-26"
-                          aria-label="October 26, 2026"
-                        /><span>26</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-27"
-                          aria-label="October 27, 2026"
-                        /><span>27</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-28"
-                          aria-label="October 28, 2026"
-                        /><span>28</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-29"
-                          aria-label="October 29, 2026"
-                        /><span>29</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-30"
-                          aria-label="October 30, 2026"
-                        /><span>30</span></label
-                      >
-                      <label class="calendar-day"
-                        ><input
-                          type="radio"
-                          name="dueDate"
-                          value="2026-10-31"
-                          aria-label="October 31, 2026"
-                        /><span>31</span></label
-                      >
-                    </div>
+                    <div class="calendar-days" id="calendar-days"></div>
                     <p class="picker-note">
                       Select one date for this assignment.
                     </p>
@@ -565,8 +289,8 @@
                     </div>
                     <div class="time-controls">
                       <div>
-                        <label for="deadline-hour">Hour</label
-                        ><select id="deadline-hour" name="dueHour">
+                        <label for="deadline-hour">Hour</label>
+                        <select id="deadline-hour" name="dueHour">
                           <option value="" selected disabled>HH</option>
                           <option value="1">01</option>
                           <option value="2">02</option>
@@ -583,8 +307,8 @@
                         </select>
                       </div>
                       <div>
-                        <label for="deadline-minute">Minute</label
-                        ><select id="deadline-minute" name="dueMinute">
+                        <label for="deadline-minute">Minute</label>
+                        <select id="deadline-minute" name="dueMinute">
                           <option value="" selected disabled>MM</option>
                           <option value="0">00</option>
                           <option value="1">01</option>
@@ -649,8 +373,8 @@
                         </select>
                       </div>
                       <div>
-                        <label for="deadline-period">Period</label
-                        ><select id="deadline-period" name="duePeriod">
+                        <label for="deadline-period">Period</label>
+                        <select id="deadline-period" name="duePeriod">
                           <option value="AM">AM</option>
                           <option value="PM">PM</option>
                         </select>
