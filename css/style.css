@@ -9,7 +9,6 @@
     --border: #dce3eb;
 }
 
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -41,16 +40,12 @@ button {
     cursor: pointer;
 }
 
-
 button:focus-visible,
 a:focus-visible {
     outline: 3px solid #79aee1;
     outline-offset: 4px;
 }
 
-/* 3. Main card and the two forms.
-   The grid has two equal columns: registration left, login right.
-   minmax(0, 1fr) lets each column shrink without overflowing. */
 .auth-card {
     position: relative;
     isolation: isolate;
@@ -72,7 +67,6 @@ a:focus-visible {
     flex-direction: column;
     min-width: 0;
     padding: 40px 52px;
-    /* Animate fading and movement when the active form changes. */
     transition: opacity 300ms ease, transform 700ms ease;
 }
 
@@ -82,14 +76,12 @@ a:focus-visible {
 
 .login-panel {
     grid-column: 2;
-    /* Registration is shown first, so login starts hidden. */
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transform: translateX(24px);
 }
 
-/* 4. Brand and form headings. */
 .brand {
     display: inline-flex;
     align-items: center;
@@ -151,7 +143,6 @@ a:focus-visible {
     line-height: 1.7;
 }
 
-
 form {
     display: grid;
     gap: 17px;
@@ -212,7 +203,6 @@ form {
     border-color: #5684b3;
     box-shadow: 0 0 0 3px #16467514;
 }
-
 
 .primary-button {
     display: flex;
@@ -278,7 +268,6 @@ form {
     margin-top: 100px;
 }
 
-
 .welcome-panel {
     position: absolute;
     z-index: 2;
@@ -336,7 +325,6 @@ form {
     display: none;
 }
 
-
 .welcome-art {
     position: relative;
     flex: 1;
@@ -366,7 +354,6 @@ form {
 
 .welcome-art::before,
 .welcome-art::after {
-    /* Pseudo-elements draw the two dots without extra HTML elements. */
     content: "";
     position: absolute;
     z-index: 1;
@@ -443,9 +430,8 @@ form {
     text-transform: uppercase;
 }
 
-
 .auth-card.is-login .welcome-panel {
-    
+
     transform: translateX(-100%);
 }
 
@@ -471,7 +457,6 @@ form {
     display: block;
 }
 
-
 @media (max-width: 980px) {
     .form-panel,
     .welcome-panel {
@@ -479,7 +464,6 @@ form {
         padding-left: 32px;
     }
 }
-
 
 @media (max-width: 760px) {
     body {

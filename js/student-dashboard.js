@@ -1,4 +1,6 @@
 import { auth } from "./firebase.js";
+import { loadStudentAssignments } from "./student-assignments.js";
+import { getUserProfile } from "./user-profile.js";
 
 import {
   onAuthStateChanged,
@@ -11,11 +13,13 @@ import {
   getDocs,
   query,
   where,
-  addDoc,
+  doc,
+  getDoc,
+  setDoc,
+  runTransaction,
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 const db = getFirestore();
-const userColRef = collection(db, "users");
 const courseColRef = collection(db, "courses");
 const enrollmentColRef = collection(db, "enrollments");
 const availableCourseList = document.getElementById("available-course-list");
@@ -33,17 +37,13 @@ onAuthStateChanged(auth, async (user) => {
   }
 
   try {
-    const userProfilesQuery = query(userColRef, where("uid", "==", user.uid));
+    const userProfile = await getUserProfile(user);
 
-    const userProfilesSnapshot = await getDocs(userProfilesQuery);
-
-    if (userProfilesSnapshot.empty) {
+    if (!userProfile) {
       await signOut(auth);
       window.location.replace("./index.html");
       return;
     }
-
-    const userProfile = userProfilesSnapshot.docs[0].data();
 
     if (userProfile.role !== "student") {
       if (userProfile.role === "instructor") {
@@ -84,9 +84,28 @@ onAuthStateChanged(auth, async (user) => {
       ),
     );
 
+    for (const enrollmentDocument of studentEnrollmentsSnapshot.docs) {
+      const enrollment = enrollmentDocument.data();
+      const course = courses.find((entry) => entry.id === enrollment.courseId);
+      if (!course) continue;
+      const stableId = `${user.uid}_${course.id}`;
+      const stableRef = doc(db, "enrollments", stableId);
+      if (!(await getDoc(stableRef)).exists()) {
+        await setDoc(stableRef, {
+          studentId: user.uid,
+          studentName: `${userProfile.firstname} ${userProfile.lastname}`.trim(),
+          courseId: course.id,
+          instructorId: course.instructorId,
+          enrolledAt: enrollment.enrolledAt || new Date(),
+        });
+      }
+    }
+
     const enrolledCourses = courses.filter((course) =>
       enrolledCourseIds.has(course.id),
     );
+    const studentName = `${userProfile.firstname} ${userProfile.lastname}`.trim();
+    await loadStudentAssignments(user, enrolledCourses, studentName);
 
     if (enrolledCourses.length > 0) {
       enrolledCourseList.replaceChildren();
@@ -132,36 +151,63 @@ onAuthStateChanged(auth, async (user) => {
       const isAlreadyEnrolled = enrolledCourseIds.has(course.id);
       enrollButton.textContent = isAlreadyEnrolled ? "Enrolled" : "Enroll";
       enrollButton.disabled = isAlreadyEnrolled;
+      const enrollmentMessage = document.createElement("p");
+      enrollmentMessage.setAttribute("role", "status");
 
       enrollButton.addEventListener("click", async () => {
         enrollButton.disabled = true;
         enrollButton.textContent = "Checking...";
+        enrollmentMessage.textContent = "";
 
         try {
           const existingEnrollmentQuery = query(
             enrollmentColRef,
             where("studentId", "==", user.uid),
-            where("courseId", "==", course.id),
           );
           const existingEnrollmentSnapshot = await getDocs(
             existingEnrollmentQuery,
           );
 
-          if (!existingEnrollmentSnapshot.empty) {
+          if (existingEnrollmentSnapshot.docs.some(
+            (entry) => entry.data().courseId === course.id,
+          )) {
             enrollButton.textContent = "Already enrolled";
             return;
           }
 
-          await addDoc(enrollmentColRef, {
-            studentId: user.uid,
-            courseId: course.id,
-            enrolledAt: new Date(),
+          const stableRef = doc(db, "enrollments", `${user.uid}_${course.id}`);
+          await runTransaction(db, async (transaction) => {
+            const existing = await transaction.get(stableRef);
+            if (existing.exists()) return;
+            transaction.set(stableRef, {
+              studentId: user.uid,
+              studentName: `${userProfile.firstname} ${userProfile.lastname}`.trim(),
+              courseId: course.id,
+              instructorId: course.instructorId,
+              enrolledAt: new Date(),
+            });
           });
 
           enrollButton.textContent = "Enrolled";
+          if (!enrolledCourses.some((entry) => entry.id === course.id)) {
+            enrolledCourses.push(course);
+            if (enrolledCourses.length === 1) enrolledCourseList.replaceChildren();
+            const enrolledCard = document.createElement("article");
+            enrolledCard.classList.add("course-card");
+            const enrolledTitle = document.createElement("h3");
+            enrolledTitle.textContent = course.title;
+            const enrolledCode = document.createElement("p");
+            enrolledCode.textContent = `Course code: ${course.code}`;
+            const enrolledDescription = document.createElement("p");
+            enrolledDescription.textContent = course.description;
+            enrolledCard.append(enrolledTitle, enrolledCode, enrolledDescription);
+            enrolledCourseList.append(enrolledCard);
+          }
+          await loadStudentAssignments(user, enrolledCourses, studentName);
         } catch (error) {
           enrollButton.disabled = false;
           enrollButton.textContent = "Enroll";
+          enrollmentMessage.textContent = "Could not enroll. Please try again.";
           console.error("Course enrollment error:", error.code || error.message);
         }
       });
@@ -171,6 +217,7 @@ onAuthStateChanged(auth, async (user) => {
         codeElement,
         descriptionElement,
         enrollButton,
+        enrollmentMessage,
       );
       availableCourseList.append(courseCard);
     });
@@ -189,7 +236,3 @@ logoutButton.addEventListener("click", async () => {
     console.error("Logout error:", error.code);
   }
 });
-
-
-
-

@@ -1,12 +1,11 @@
-/* Shared colours and page defaults. */
 :root {
-  --page-background: #edf2f7;
+  --page-background: #f5f7fb;
   --surface: #ffffff;
-  --text: #172b45;
-  --muted: #64748b;
-  --blue: #164675;
-  --blue-dark: #10365d;
-  --border: #dce3eb;
+  --text: #14223d;
+  --muted: #647898;
+  --blue: #2862e9;
+  --blue-dark: #17345c;
+  --border: #dbe4f0;
 }
 
 * {
@@ -63,18 +62,17 @@ select:focus-visible {
   transform: translateY(0);
 }
 
-/* Desktop layout and sidebar. */
 .dashboard-layout {
   display: grid;
-  grid-template-columns: 230px minmax(0, 1fr);
+  grid-template-columns: 224px minmax(0, 1fr);
   min-height: 100vh;
 }
 
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  padding: 32px 22px;
+  gap: 22px;
+  padding: 26px 20px 20px;
   background: var(--blue-dark);
   color: white;
 }
@@ -82,27 +80,27 @@ select:focus-visible {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   align-self: flex-start;
   text-decoration: none;
 }
 
 .brand-mark {
   display: grid;
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   place-items: center;
-  border-radius: 12px;
+  border-radius: 50%;
   background: var(--surface);
   color: var(--blue-dark);
-  font-size: 13px;
+  font-size: 8px;
   font-weight: 700;
   letter-spacing: 1px;
 }
 
 .brand-name {
   color: white;
-  font-size: 22px;
+  font-size: 23px;
   font-weight: 750;
   letter-spacing: -0.8px;
 }
@@ -112,9 +110,9 @@ select:focus-visible {
 }
 
 .sidebar-label {
-  margin-bottom: 10px;
-  padding-left: 12px;
-  color: #b8cce0;
+  margin-bottom: 34px;
+  padding-left: 3px;
+  color: #a7c9ff;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.6px;
@@ -124,15 +122,15 @@ select:focus-visible {
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .nav-link {
-  padding: 11px 12px;
-  border-radius: 10px;
-  color: #d3dfeb;
+  padding: 13px 14px;
+  border-radius: 11px;
+  color: #f5f7ff;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
 }
 
@@ -142,7 +140,7 @@ select:focus-visible {
 }
 
 .nav-link.is-active {
-  background: #d7e8f8;
+  background: #d9e7ff;
   color: var(--blue-dark);
 }
 
@@ -150,7 +148,7 @@ select:focus-visible {
   margin-top: auto;
   padding: 18px 14px;
   border-radius: 12px;
-  background: var(--blue);
+  background: #2761df;
   color: white;
   font-size: 12px;
 }
@@ -165,10 +163,25 @@ select:focus-visible {
   color: #d4e2f1;
 }
 
-/* Main heading, account label and buttons. */
+.sidebar-logout {
+  width: 100%;
+  padding: 13px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: white;
+  color: var(--blue);
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebar-logout:hover {
+  background: #e8f1ff;
+}
+
 .dashboard-main {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1600px;
   min-width: 0;
   margin: 0 auto;
   padding: 0;
@@ -176,11 +189,11 @@ select:focus-visible {
 
 .dashboard-topbar {
   display: flex;
-  min-height: 72px;
+  min-height: 84px;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: 12px 40px;
+  padding: 12px 44px;
   border-bottom: 1px solid var(--border);
   background: var(--surface);
 }
@@ -198,7 +211,7 @@ select:focus-visible {
 }
 
 .dashboard-page {
-  padding: 30px 40px 24px;
+  padding: 24px 44px 48px;
 }
 
 .page-header,
@@ -224,7 +237,7 @@ select:focus-visible {
 }
 
 h1 {
-  font-size: 30px;
+  font-size: clamp(27px, 2.8vw, 34px);
   line-height: 1.25;
   letter-spacing: -1px;
 }
@@ -247,7 +260,7 @@ h1 {
 .section-tag {
   padding: 4px 10px;
   border: 1px solid var(--border);
-  border-radius: 20px;
+  border-radius: 9px;
   color: var(--muted);
   font-size: 11px;
   font-weight: 600;
@@ -255,9 +268,9 @@ h1 {
 
 .primary-button,
 .secondary-button {
-  padding: 10px 18px;
+  padding: 12px 18px;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 9px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -270,7 +283,7 @@ h1 {
 }
 
 .secondary-button {
-  background: var(--surface);
+  background: #e8f0fc;
   color: var(--blue);
 }
 
@@ -279,7 +292,7 @@ h1 {
 }
 
 .secondary-button:hover:not(:disabled) {
-  background: #f3f6fa;
+  background: #d8e7ff;
 }
 
 button:disabled {
@@ -287,7 +300,6 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* Welcome card. */
 .overview-hero {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(230px, 0.9fr);
@@ -299,9 +311,9 @@ button:disabled {
   min-height: 164px;
   margin: 0;
   padding: 28px;
-  border: 1px solid #d5e3f1;
+  border: 1px solid #e4eeff;
   border-radius: 16px;
-  background: #eaf1f8;
+  background: #e8f1ff;
   color: var(--text);
 }
 
@@ -362,15 +374,15 @@ button:disabled {
 }
 
 .instructor-overview-actions .secondary-button {
-  background: #eaf1f8;
-  border-color: #d5e3f1;
+  background: #e8f1ff;
+  border-color: #dbe8ff;
 }
 
 .overview-links {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
-  margin-bottom: 26px;
+  margin-bottom: 28px;
 }
 
 .overview-link {
@@ -420,16 +432,15 @@ button:disabled {
   background: #ffffff22;
 }
 
-/* Course and assignment sections. */
 .dashboard-content {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
 }
 
 .content-section {
   min-width: 0;
-  padding: 25px;
+  padding: 28px;
   border: 1px solid var(--border);
   border-radius: 16px;
   background: var(--surface);
@@ -455,18 +466,94 @@ button:disabled {
 
 .course-list {
   display: grid;
-  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
 }
 
 .course-card {
-  padding: 16px;
+  padding: 20px;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--surface);
 }
 
 .course-card h3 {
-  font-size: 15px;
+  display: flex;
+  min-height: 82px;
+  align-items: center;
+  padding: 18px;
+  border-radius: 11px;
+  background: #e9f1ff;
+  color: var(--blue-dark);
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.course-card:nth-child(3n + 2) h3 {
+  background: #edf2ff;
+}
+
+.course-card:nth-child(3n + 3) h3 {
+  background: #e6effa;
+}
+
+.assignment-card h3,
+.submission-row h4 {
+  min-height: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.assignment-card + .assignment-card {
+  margin-top: 16px;
+}
+
+.assignment-card {
+  overflow-wrap: anywhere;
+}
+
+.assignment-card details,
+.assignment-card .status-badge,
+.submission-form {
+  margin-top: 16px;
+}
+
+.assignment-card summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.submission-row {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.grading-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.grading-form label,
+.submission-form label {
+  display: grid;
+  gap: 8px;
+}
+
+.grading-form input,
+.submission-form input,
+.submission-form textarea {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  max-width: 100%;
+}
+
+.grading-form input {
+  width: 120px;
 }
 
 .course-card p {
@@ -476,6 +563,7 @@ button:disabled {
 }
 
 .empty-state {
+  grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -484,7 +572,7 @@ button:disabled {
   padding: 26px 20px;
   border: 1px dashed var(--border);
   border-radius: 12px;
-  background: #fafbfd;
+  background: #f9fbff;
   text-align: center;
 }
 
@@ -540,13 +628,13 @@ button:disabled {
 }
 
 .pending {
-  background: #fff3d9;
-  color: #805d11;
+  background: #eef2ff;
+  color: #475a7c;
 }
 
 .submitted {
-  background: #e6f4ec;
-  color: #226642;
+  background: #dceaff;
+  color: #225ccf;
 }
 
 .overdue {
@@ -578,7 +666,7 @@ button:disabled {
   padding: 8px 12px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: var(--surface);
+  background: #f6f8fc;
   cursor: pointer;
   list-style: none;
 }
@@ -618,6 +706,7 @@ button:disabled {
   display: grid;
   gap: 16px;
   margin-top: 22px;
+  max-width: 790px;
 }
 
 .form-row {
@@ -772,6 +861,12 @@ button:disabled {
   color: white;
 }
 
+.calendar-day input:disabled + span {
+  color: #a9b2bd;
+  background: transparent;
+  cursor: not-allowed;
+}
+
 .calendar-day input:focus-visible + span {
   outline: 3px solid #79aee1;
   outline-offset: 2px;
@@ -898,8 +993,10 @@ button:disabled {
   font-size: 12px;
 }
 
-/* Smaller screens use one content column. */
 @media (max-width: 1100px) {
+  .course-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .dashboard-topbar {
     padding-right: 26px;
     padding-left: 26px;
@@ -915,8 +1012,10 @@ button:disabled {
   }
 }
 
-/* On phones, navigation sits above the dashboard. */
 @media (max-width: 760px) {
+  .course-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .form-row {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -938,6 +1037,12 @@ button:disabled {
   .sidebar-label,
   .sidebar-footer {
     display: none;
+  }
+
+  .sidebar-logout {
+    width: auto;
+    align-self: flex-start;
+    padding: 8px 12px;
   }
 
   .sidebar-nav {
@@ -972,6 +1077,12 @@ button:disabled {
 
   h1 {
     font-size: 27px;
+    overflow-wrap: anywhere;
+  }
+
+  .welcome-card h2,
+  .overview-action-card h2 {
+    overflow-wrap: anywhere;
   }
 
   .welcome-card {
