@@ -34,7 +34,8 @@ export function setupAssignmentForm() {
     const courseId = courseInput.value;
     const deadline = picker.getDeadline();
     if (!title || !description || !courseId) {
-      message.textContent = "Enter a title and description, and select one of your courses.";
+      message.textContent =
+        "Enter a title and description, and select one of your courses.";
       return;
     }
     if (!deadline) {
@@ -57,12 +58,23 @@ export function setupAssignmentForm() {
       const assignmentRef = doc(collection(db, "assignments"));
       await runTransaction(db, async (transaction) => {
         const course = await transaction.get(doc(db, "courses", courseId));
-        if (!course.exists() || course.data().instructorId !== user.uid || auth.currentUser?.uid !== user.uid) {
-          throw new Error("Select a course that belongs to your instructor account.");
+        if (
+          !course.exists() ||
+          course.data().instructorId !== user.uid ||
+          auth.currentUser?.uid !== user.uid
+        ) {
+          throw new Error(
+            "Select a course that belongs to your instructor account.",
+          );
         }
-        if (deadline <= new Date()) throw new Error("The deadline must still be in the future.");
+        if (deadline <= new Date()) {
+          throw new Error("The deadline must still be in the future.");
+        }
         transaction.set(assignmentRef, {
-          title, description, courseId, deadline,
+          title,
+          description,
+          courseId,
+          deadline,
           instructorId: user.uid,
           createdAt: serverTimestamp(),
         });

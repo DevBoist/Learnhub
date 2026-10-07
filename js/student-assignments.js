@@ -17,13 +17,19 @@ export async function loadStudentAssignments(user, courses, studentName = "") {
   const list = document.getElementById("assignment-list");
   list.textContent = "Loading assignments...";
   try {
-    const submissions = await getDocs(query(collection(db, "submissions"), where("studentId", "==", user.uid)));
+    const submissions = await getDocs(
+      query(collection(db, "submissions"), where("studentId", "==", user.uid)),
+    );
     const cards = [];
     for (const course of courses) {
-      const assignments = await getDocs(query(collection(db, "assignments"), where("courseId", "==", course.id)));
+      const assignments = await getDocs(
+        query(collection(db, "assignments"), where("courseId", "==", course.id)),
+      );
       for (const assignmentDocument of assignments.docs) {
         const assignment = assignmentDocument.data();
-        const submission = submissions.docs.find((entry) => entry.data().assignmentId === assignmentDocument.id)?.data();
+        const submission = submissions.docs
+          .find((entry) => entry.data().assignmentId === assignmentDocument.id)
+          ?.data();
         const deadline = deadlineDate(assignment.deadline);
         const overdue = deadline && deadline <= new Date();
         const state = submission ? "Submitted" : overdue ? "Overdue" : "Pending";
@@ -36,7 +42,11 @@ export async function loadStudentAssignments(user, courses, studentName = "") {
           element("span", state, `status-badge ${state.toLowerCase()}`),
         );
         if (submission) {
-          card.append(element("p", submission.marks == null ? "Awaiting marking" : `Your mark: ${submission.marks}/100`));
+          const markText =
+            submission.marks == null
+              ? "Awaiting marking"
+              : `Your mark: ${submission.marks}/100`;
+          card.append(element("p", markText));
         } else if (deadline && !overdue) {
           const form = element("form", undefined, "dashboard-form submission-form");
           form.noValidate = true;
@@ -64,19 +74,44 @@ export async function loadStudentAssignments(user, courses, studentName = "") {
             button.disabled = true;
             button.textContent = "Submitting...";
             try {
-              if (auth.currentUser?.uid !== user.uid) throw new Error("Please sign in again.");
-              const enrollments = await getDocs(query(collection(db, "enrollments"), where("studentId", "==", user.uid)));
+              if (auth.currentUser?.uid !== user.uid) {
+                throw new Error("Please sign in again.");
+              }
+              const enrollments = await getDocs(
+                query(
+                  collection(db, "enrollments"),
+                  where("studentId", "==", user.uid),
+                ),
+              );
               if (!enrollments.docs.some((entry) => entry.data().courseId === course.id)) {
                 throw new Error("You must enroll in this course first.");
               }
-              const submissionRef = doc(db, "submissions", `${user.uid}_${assignmentDocument.id}`);
+              const submissionRef = doc(
+                db,
+                "submissions",
+                `${user.uid}_${assignmentDocument.id}`,
+              );
               await runTransaction(db, async (transaction) => {
                 const currentAssignment = await transaction.get(assignmentDocument.ref);
                 const existing = await transaction.get(submissionRef);
-                if (existing.exists()) throw new Error("Already submitted. Refresh to see your submission.");
-                const currentDeadline = currentAssignment.exists() ? deadlineDate(currentAssignment.data().deadline) : null;
-                if (!currentDeadline || currentDeadline <= new Date()) throw new Error("The submission deadline has passed or is unavailable.");
-                if (currentAssignment.data().courseId !== course.id) throw new Error("This assignment has changed. Refresh to continue.");
+                if (existing.exists()) {
+                  throw new Error(
+                    "Already submitted. Refresh to see your submission.",
+                  );
+                }
+                const currentDeadline = currentAssignment.exists()
+                  ? deadlineDate(currentAssignment.data().deadline)
+                  : null;
+                if (!currentDeadline || currentDeadline <= new Date()) {
+                  throw new Error(
+                    "The submission deadline has passed or is unavailable.",
+                  );
+                }
+                if (currentAssignment.data().courseId !== course.id) {
+                  throw new Error(
+                    "This assignment has changed. Refresh to continue.",
+                  );
+                }
                 transaction.set(submissionRef, {
                   assignmentId: assignmentDocument.id,
                   courseId: course.id,
@@ -90,7 +125,9 @@ export async function loadStudentAssignments(user, courses, studentName = "") {
               });
               await loadStudentAssignments(user, courses, studentName);
             } catch (error) {
-              message.textContent = error.code ? "Could not submit. Please try again." : error.message;
+              message.textContent = error.code
+                ? "Could not submit. Please try again."
+                : error.message;
             } finally {
               button.disabled = false;
               button.textContent = "Submit assignment";

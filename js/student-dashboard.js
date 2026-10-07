@@ -1,7 +1,6 @@
 import { auth } from "./firebase.js";
 import { loadStudentAssignments } from "./student-assignments.js";
 import { getUserProfile } from "./user-profile.js";
-
 import {
   onAuthStateChanged,
   signOut,

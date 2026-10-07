@@ -45,7 +45,8 @@ export function setupDeadlinePicker() {
     } else {
       summary.textContent = "Choose a date, hour and minute for submission.";
     }
-    hourHand.style.transform = `translateX(-50%) rotate(${Number(hour.value) % 12 * 30 + Number(minute.value) / 2}deg)`;
+    const hourAngle = (Number(hour.value) % 12) * 30 + Number(minute.value) / 2;
+    hourHand.style.transform = `translateX(-50%) rotate(${hourAngle}deg)`;
     minuteHand.style.transform = `translateX(-50%) rotate(${Number(minute.value) * 6}deg)`;
   }
 
@@ -54,7 +55,10 @@ export function setupDeadlinePicker() {
     today.setHours(0, 0, 0, 0);
     const year = displayedMonth.getFullYear();
     const month = displayedMonth.getMonth();
-    heading.textContent = displayedMonth.toLocaleDateString(undefined, { month: "long", year: "numeric" });
+    heading.textContent = displayedMonth.toLocaleDateString(undefined, {
+      month: "long",
+      year: "numeric",
+    });
     previous.disabled = year === today.getFullYear() && month === today.getMonth();
     next.disabled = false;
     days.replaceChildren();
@@ -75,7 +79,10 @@ export function setupDeadlinePicker() {
       input.value = dateValue;
       input.checked = selectedDate === dateValue;
       input.disabled = date < today;
-      input.setAttribute("aria-label", date.toLocaleDateString(undefined, { dateStyle: "full" }));
+      input.setAttribute(
+        "aria-label",
+        date.toLocaleDateString(undefined, { dateStyle: "full" }),
+      );
       if (date.getTime() === today.getTime()) input.setAttribute("aria-current", "date");
       input.addEventListener("change", () => {
         selectedDate = input.value;
@@ -96,7 +103,9 @@ export function setupDeadlinePicker() {
     displayedMonth.setMonth(displayedMonth.getMonth() + 1);
     renderCalendar();
   });
-  [hour, minute, period].forEach((input) => input.addEventListener("change", updateSummary));
+  [hour, minute, period].forEach((input) =>
+    input.addEventListener("change", updateSummary),
+  );
 
   function reset() {
     selectedDate = "";

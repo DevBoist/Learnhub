@@ -7,15 +7,19 @@ export function element(tag, text, className) {
 
 export function deadlineDate(value) {
   if (!value) return null;
-  const date = typeof value.toDate === "function" ? value.toDate() : new Date(value);
+  const date =
+    typeof value.toDate === "function" ? value.toDate() : new Date(value);
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
 export function formatDate(value) {
   const date = deadlineDate(value);
-  return date ? new Intl.DateTimeFormat(undefined, {
-    dateStyle: "medium", timeStyle: "short",
-  }).format(date) : "Date unavailable";
+  if (!date) return "Date unavailable";
+
+  return new Intl.DateTimeFormat(undefined, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
 }
 
 export function safeLink(value) {

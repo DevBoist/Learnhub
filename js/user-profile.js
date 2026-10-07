@@ -16,7 +16,9 @@ export async function getUserProfile(user) {
   const profile = await getDoc(profileRef);
   if (profile.exists()) return profile.data();
 
-  const legacyProfiles = await getDocs(query(collection(db, "users"), where("uid", "==", user.uid)));
+  const legacyProfiles = await getDocs(
+    query(collection(db, "users"), where("uid", "==", user.uid)),
+  );
   if (legacyProfiles.empty) return null;
 
   const legacy = legacyProfiles.docs[0].data();
