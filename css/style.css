@@ -542,6 +542,22 @@ form {
     }
 }
 
+@media (max-width: 480px) {
+    body {
+        padding: 12px;
+    }
+
+    .form-panel,
+    .welcome-panel,
+    .auth-card.is-login .welcome-panel {
+        padding: 24px 20px;
+    }
+
+    .name-row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

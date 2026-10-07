@@ -2,7 +2,6 @@ import { auth } from "./firebase.js";
 import { loadInstructorAssignments } from "./instructor-assignments.js";
 import { setupAssignmentForm } from "./create-assignment.js";
 import { getUserProfile } from "./user-profile.js";
-
 import {
   onAuthStateChanged,
   signOut,

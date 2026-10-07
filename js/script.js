@@ -100,8 +100,6 @@ registerForm.addEventListener("submit", async (event) => {
       role: role,
     });
 
-    registerButton.textContent = "Creating account.....";
-
     await signOut(auth);
 
     registerForm.reset();
