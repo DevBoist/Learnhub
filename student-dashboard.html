@@ -36,19 +36,12 @@
             </svg>
           </button>
         </div>
-
-        <p class="sidebar-label">YOUR WORKSPACE</p>
         <nav class="sidebar-nav" aria-label="Dashboard sections">
           <a class="nav-link is-active" href="#overview">Overview</a>
           <a class="nav-link" href="#available-courses">Explore courses</a>
           <a class="nav-link" href="#my-courses">My courses</a>
           <a class="nav-link" href="#assignments">Assignments</a>
         </nav>
-
-        <div class="sidebar-footer">
-          <p>A little progress,<br />every day.</p>
-          <span>Your next chapter starts here.</span>
-        </div>
         <button class="sidebar-logout" id="logout-button" type="button">Log out</button>
       </aside>
       <button class="menu-backdrop" type="button" aria-label="Close navigation menu" tabindex="-1"></button>
@@ -81,8 +74,7 @@
                 ><span class="user-role" id="user-role">Student</span>
               </summary>
               <div class="profile-details">
-                <p class="eyebrow">YOUR ACCOUNT</p>
-                <p id="profile-email">Your email will appear here.</p>
+                <p id="profile-email">Loading account...</p>
                 <p>Student account</p>
               </div>
             </details>
@@ -92,39 +84,19 @@
         <div class="dashboard-page">
           <header class="page-header">
             <div>
-              <p class="eyebrow">YOUR LEARNING SPACE</p>
-              <h1>Keep your momentum.</h1>
-              <p class="page-intro">
-                A clear view of your courses and what comes next.
-              </p>
+              <h1>Student dashboard</h1>
             </div>
           </header>
 
-          <section class="overview-hero" id="overview" aria-labelledby="welcome-heading">
-            <div class="welcome-card">
-              <p class="welcome-kicker">THIS WEEK</p>
-              <h2 id="welcome-heading">One small step. A stronger semester.</h2>
-              <p class="welcome-description">
-                Keep learning at your pace. Your courses and assignments are here
-                when you need them.
-              </p>
-            </div>
-            <aside class="overview-action-card">
-              <p class="eyebrow">READY TO LEARN?</p>
-              <h2>Find your next course.</h2>
-              <a class="primary-button" href="#available-courses">Explore courses</a>
-            </aside>
-          </section>
-
-          <nav class="overview-links" aria-label="Dashboard shortcuts">
+          <nav id="overview" class="overview-links" aria-label="Dashboard shortcuts">
             <a class="overview-link" href="#available-courses">
-              <span>DISCOVER</span><strong>Explore courses</strong>
+              <strong>Explore courses</strong>
             </a>
             <a class="overview-link" href="#my-courses">
-              <span>YOUR LEARNING</span><strong>My courses</strong>
+              <strong>My courses</strong>
             </a>
             <a class="overview-link" href="#assignments">
-              <span>STAY ON TRACK</span><strong>Assignments</strong>
+              <strong>Assignments</strong>
             </a>
           </nav>
 
@@ -136,21 +108,15 @@
           >
             <div class="section-heading">
               <div>
-                <p class="eyebrow">DISCOVER</p>
                 <h2 id="available-courses-heading">Explore courses</h2>
               </div>
-              <span class="section-tag">COURSE CATALOGUE</span>
             </div>
-            <p class="section-description">
-              Find a course and start learning at your own pace.
-            </p>
 
             <div class="course-list" id="available-course-list">
               <div class="empty-state">
-                <h3>A new skill starts here.</h3>
+                <h3>No courses available</h3>
                 <p>
-                  Available courses will appear here for you to explore and
-                  join.
+                  Check back later for new courses.
                 </p>
               </div>
             </div>
@@ -163,18 +129,13 @@
           >
             <div class="section-heading">
               <div>
-                <p class="eyebrow">YOUR LEARNING</p>
                 <h2 id="my-courses-heading">My courses</h2>
               </div>
-              <span class="section-tag">ENROLLED COURSES</span>
             </div>
-            <p class="section-description">
-              Keep the courses you have joined close at hand.
-            </p>
 
             <div class="course-list" id="enrolled-course-list">
               <div class="empty-state">
-                <h3>Build your learning list.</h3>
+                <h3>No enrolled courses</h3>
                 <p>The courses you enrol in will appear here.</p>
                 <a class="text-link" href="#available-courses">Find a course</a>
               </div>
@@ -188,7 +149,6 @@
           >
             <div class="section-heading">
               <div>
-                <p class="eyebrow">STAY ON TRACK</p>
                 <h2 id="assignments-heading">Assignments</h2>
               </div>
               <div class="status-guide" aria-label="Assignment status guide">
@@ -197,22 +157,15 @@
                 <span class="status-badge overdue">Overdue</span>
               </div>
             </div>
-            <p class="section-description">
-              Keep track of deadlines and the work ahead.
-            </p>
 
             <div class="assignment-list" id="assignment-list">
               <div class="empty-state">
-                <h3>A place for your coursework.</h3>
+                <h3>No assignments yet.</h3>
                 <p>Assignments for your enrolled courses will appear here.</p>
               </div>
             </div>
           </section>
           </div>
-
-          <footer class="page-footer">
-            LearnHub &mdash; for curious minds. For what comes next.
-          </footer>
         </div>
       </main>
     </div>
