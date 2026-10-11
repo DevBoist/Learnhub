@@ -726,24 +726,39 @@ button:disabled {
 
 .profile-menu summary {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 50%;
   background: #f6f8fc;
   cursor: pointer;
   list-style: none;
+}
+
+.profile-menu summary:hover,
+.profile-menu[open] summary {
+  background: #d9e7ff;
+}
+
+.profile-menu summary:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
 }
 
 .profile-menu summary::-webkit-details-marker {
   display: none;
 }
 
-.profile-label {
-  color: var(--muted);
-  font-size: 12px;
+.profile-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.profile-details p + p {
+  margin-top: 8px;
 }
 
 .profile-name {
